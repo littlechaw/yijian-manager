@@ -38,7 +38,7 @@
             <el-menu-item index="proportionate">抽成比例</el-menu-item>
             <el-menu-item index="rechargeamount">充值金额</el-menu-item>
             <el-menu-item index="appointmenttime">预约时间</el-menu-item>
-            <el-menu-item index="gradediscount">等级折扣</el-menu-item>
+            <el-menu-item index="gradediscount">满额折扣</el-menu-item>
             <el-menu-item index="pricerange">价格区间</el-menu-item>
           </el-submenu>
           <el-submenu index="8">
