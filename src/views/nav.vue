@@ -59,8 +59,7 @@
 <script>
   export default {
     name: "slider",
-    mounted(){
-      console.info(this.$route.name);
+    mounted() {
     }
   }
 </script>
