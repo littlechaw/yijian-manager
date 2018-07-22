@@ -13,7 +13,7 @@
             <el-input type="password" placeholder="密码"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" class="submit_btn">登陆</el-button>
+            <el-button type="primary" class="submit_btn" @click="submitForm">登陆</el-button>
           </el-form-item>
         </el-form>
       </section>
@@ -31,7 +31,13 @@
 
     },
     computed: {},
-    methods: {},
+    methods: {
+      submitForm(){
+        this.$router.push({
+          name:'registermanage'
+        });
+      }
+    },
     watch: {}
   }
 </script>
