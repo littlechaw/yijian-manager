@@ -82,6 +82,15 @@ Vue.prototype.$getBeforeDays = (n) => {
   return new Date(res);
 }
 
+Vue.prototype.$transferDate = (date) => {
+  if (!date) {
+    return;
+  }
+  let d = new Date(date);
+  let res = d.getFullYear() + '-' + ((d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)) + '-' + (d.getDate() < 10 ? '0' + d.getDate() : d.getDate());
+  return res;
+}
+
 
 /* eslint-disable no-new */
 new Vue({
