@@ -72,25 +72,25 @@
           telphone: '',
           userName: '',
           statusList: [{
-            key: '9',
+            key: 9,
             value: '全部'
           }, {
-            key: '0',
+            key: 0,
             value: '待支付'
           }, {
-            key: '1',
+            key: 1,
             value: '待参加'
           }, {
-            key: '2',
+            key: 2,
             value: '进行中'
           }, {
-            key: '3',
+            key: 3,
             value: '已完成'
           }, {
-            key: '4',
+            key: 4,
             value: '已取消'
           }],
-          orderStatus: '9',
+          orderStatus: 9,
           searchDate: ''
         },
         tableData: [],
@@ -106,7 +106,7 @@
       queryData() {
         let url = '/yijian/opRoot/getAppoint.do';
         let data = {
-          userId: this.searchData.storeID,
+          userId: this.searchData.storeID?this.searchData.storeID:0,
           mobile: this.searchData.telphone,
           name: this.searchData.userName,
           appointStatus: this.searchData.orderStatus,
