@@ -6,9 +6,9 @@
           <el-form-item label="文章标题">
             <el-input v-model="searchData.articleTitle" placeholder="请输入文章标题"></el-input>
           </el-form-item>
-          <el-form-item label="发布人">
-            <el-input v-model="searchData.auth" placeholder="请输入发布人"></el-input>
-          </el-form-item>
+          <!--<el-form-item label="发布人">-->
+          <!--<el-input v-model="searchData.auth" placeholder="请输入发布人"></el-input>-->
+          <!--</el-form-item>-->
           <el-form-item label="发布时间">
             <el-date-picker class="date-picker-width" v-model="searchData.searchDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
             </el-date-picker>
@@ -17,7 +17,7 @@
         <el-row>
           <el-form-item label="文章分类">
             <el-select v-model="searchData.articleClass">
-              <el-option v-for="item in searchData.articleClassList" :label="item.value" :value="item.key" :key="item.key"></el-option>
+              <el-option v-for="(item,index) in searchData.articleClassList" :label="item.typeName" :value="item.typeId" :key="index"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -33,15 +33,14 @@
         border
         :header-cell-style="headerStyle"
         style="width: 100%;text-align:center">
-        <el-table-column prop="monitorDynamicRegisterCount" label="序号"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthInfoCount" label="文章标题"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="文章分类"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyCount" label="发布人"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="申请时间"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="操作">
+        <el-table-column prop="informationId" label="序号"></el-table-column>
+        <el-table-column prop="header" label="文章标题"></el-table-column>
+        <el-table-column prop="type" label="文章目标"></el-table-column>
+        <el-table-column prop="createTime" label="申请时间"></el-table-column>
+        <el-table-column prop="" label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看文章详情</el-button>
+            <el-button @click="deleteArticle(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="articleDetail(scope.row)" type="text" size="small">查看文章详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,34 +56,55 @@
     name: "ArticleList",
     data() {
       return {
-        searchData:{
+        searchData: {
           articleTitle: '',
           auth: '',
-          articleClassList: [{
-            key: '0',
-            value: '全部'
-          }, {
-            key: '1',
-            value: '待审核'
-          }, {
-            key: '2',
-            value: '已审核'
-          }, {
-            key: '3',
-            value: '已拒绝'
-          }],
-          articleClass: '0',
+          articleClassList: [],
+          articleClass: 0,
           searchDate: ''
         },
-        tableData: []
+        tableData: [],
+        total: 5,
+        currentPage: 1
       }
     },
     mounted() {
       this.searchData.searchDate = [getBeforeDays(7), new Date()];
+      this.getArticleClass();
     },
     methods: {
+      getArticleClass() {
+        let url = '/yijian/unLogin/findAllInfomationType.do';
+        let data = {};
+        this.$axios.dopost(url, data).then(res => {
+          this.searchData.articleClassList = res;
+          this.searchData.articleClass = res[0].typeId;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      },
       queryData() {
-
+        let url = '/yijian/opRoot/findInformation.do';
+        let header = this.searchData.articleTitle,
+          timeStart = this.$transferDate(this.searchData.searchDate[0]),
+          timeEnd = this.$transferDate(this.searchData.searchDate[1]),
+          type = this.searchData.articleClass,
+          startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
+          pageSize = 10;
+        let data = {
+          header,
+          timeStart,
+          timeEnd,
+          type,
+          startIndex,
+          pageSize
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.tableData = res;
+          this.total = res.length > 0 ? res.length : 1;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
       },
       headerStyle: function () {
         return {
@@ -93,8 +113,19 @@
           "text-align": "center"
         }
       },
-      handleClick(d){
+      deleteArticle(d) {
 
+      },
+      articleDetail(d) {
+        this.alertData = d.text;
+      }
+    },
+    filters: {},
+    watch: {
+      "searchData.articleClass"(n, o) {
+        if (o == 0) {
+          this.queryData();
+        }
       }
     }
   }
