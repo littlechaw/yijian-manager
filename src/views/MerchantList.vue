@@ -77,7 +77,7 @@
       <p><span>状态:</span><span>{{alertData.store.name}}</span></p>
       <p><span>申请人:</span><span>{{alertData.store.name}}</span></p>
       <p><span>手机号:</span><span>{{alertData.store.name}}</span></p>
-      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 1">
+      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 0">
         <el-button @click="handleChangeStoreInfo(false)">拒绝申请</el-button>
         <el-button type="primary" @click="handleChangeStoreInfo(true)">通过审核</el-button>
       </span>
@@ -101,16 +101,16 @@
           storeChat: '',
           storePhone: '',
           openList: [{
-            key: 0,
+            key: 9,
             value: '全部'
           }, {
-            key: 1,
+            key: 0,
             value: '待审核'
           }, {
-            key: 2,
+            key: 1,
             value: '已审核'
           }, {
-            key: 3,
+            key: 2,
             value: '已拒绝'
           }],
           isOpen: 0,
@@ -202,15 +202,12 @@
     filters: {
       storeStatusFilter(d) {
         if (d == 0) {
-          return '无状态';
-        }
-        if (d == 1) {
           return '待审核';
         }
-        if (d == 2) {
+        if (d == 1) {
           return '已审核';
         }
-        if (d == 3) {
+        if (d == 2) {
           return '已拒绝';
         }
       }
