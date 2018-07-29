@@ -25,6 +25,7 @@
             <template slot="title"><i class="el-icon-edit"></i>文章管理</template>
             <el-menu-item index="editarticle">发布文章</el-menu-item>
             <el-menu-item index="articlelist">文章列表</el-menu-item>
+            <el-menu-item index="targetsetting">目标管理</el-menu-item>
           </el-submenu>
           <el-submenu index="6">
             <template slot="title"><i class="el-icon-location"></i>活动管理</template>
@@ -32,12 +33,12 @@
           </el-submenu>
           <el-submenu index="7">
             <template slot="title"><i class="el-icon-setting"></i>配置</template>
-            <el-menu-item index="targetsetting">目标设置</el-menu-item>
-            <el-menu-item index="classificationofarticles">文章分类设置</el-menu-item>
-            <el-menu-item index="coupon">优惠券</el-menu-item>
+            <!--<el-menu-item index="classificationofarticles">文章分类设置</el-menu-item>-->
+            <el-menu-item index="couponregister">注册优惠券</el-menu-item>
+            <el-menu-item index="couponrecord">优惠券记录</el-menu-item>
             <el-menu-item index="proportionate">抽成比例</el-menu-item>
             <el-menu-item index="rechargeamount">充值金额</el-menu-item>
-            <el-menu-item index="appointmenttime">预约时间</el-menu-item>
+            <!--<el-menu-item index="appointmenttime">预约时间</el-menu-item>-->
             <el-menu-item index="gradediscount">满额折扣</el-menu-item>
             <el-menu-item index="pricerange">价格区间</el-menu-item>
           </el-submenu>
