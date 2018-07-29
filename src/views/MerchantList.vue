@@ -77,7 +77,7 @@
       <p><span>状态:</span><span>{{alertData.store.name}}</span></p>
       <p><span>申请人:</span><span>{{alertData.store.name}}</span></p>
       <p><span>手机号:</span><span>{{alertData.store.name}}</span></p>
-      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 0">
+      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 1">
         <el-button @click="handleChangeStoreInfo(false)">拒绝申请</el-button>
         <el-button type="primary" @click="handleChangeStoreInfo(true)">通过审核</el-button>
       </span>
