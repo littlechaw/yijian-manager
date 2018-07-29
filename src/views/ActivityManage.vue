@@ -17,11 +17,11 @@
               <el-option v-for="item in searchData.statusList" :label="item.value" :value="item.key" :key="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="活动目标">
-            <el-select v-model="searchData.aim">
-              <el-option v-for="item in searchData.aimList" :label="item.value" :value="item.key" :key="item.key"></el-option>
-            </el-select>
-          </el-form-item>
+          <!--<el-form-item label="活动目标">-->
+          <!--<el-select v-model="searchData.aim">-->
+          <!--<el-option v-for="item in searchData.aimList" :label="item.value" :value="item.key" :key="item.key"></el-option>-->
+          <!--</el-select>-->
+          <!--</el-form-item>-->
           <el-form-item>
             <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
@@ -35,52 +35,72 @@
         border
         :header-cell-style="headerStyle"
         style="width: 100%;text-align:center">
-        <el-table-column prop="monitorDynamicRegisterCount" label="序号"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthInfoCount" label="活动标题"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="活动目标"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyCount" label="发布人"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="状态"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="发布时间"></el-table-column>
+        <el-table-column prop="activityId" label="序号"></el-table-column>
+        <el-table-column prop="header" label="活动标题"></el-table-column>
+        <el-table-column prop="name" label="发布人"></el-table-column>
+        <el-table-column prop="activityStatus" label="状态"></el-table-column>
+        <el-table-column prop="createTime" label="发布时间"></el-table-column>
         <el-table-column prop="monitorDynamicApplyPCT" label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看活动详情</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :page-size="10"
+          layout="prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
     </div>
-
+    <el-dialog title="订单详情" :visible.sync="centerDialogVisible" width="30%" center>
+      <p><span>活动标题:</span><span>{{alertData.activity.header}}</span></p>
+      <p><span>活动目标:</span><span>{{alertData.activity.target}}</span></p>
+      <p><span>发起人:</span><span>{{alertData.user.name}}</span></p>
+      <p><span>手机号:</span><span>{{alertData.user.mobile}}</span></p>
+      <p><span>发起人订单编号:</span><span>{{alertData.activity.outTradeNo}}</span></p>
+      <p><span>商家:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>商家地址:</span><span>{{alertData.store.address}}</span></p>
+      <p><span>预约时间:</span><span>{{alertData.activity.startTime}}</span></p>
+      <p><span>计费时间:</span><span>暂无</span></p>
+      <p><span>其他参与人:</span></p>
+      <p><span>活动状态:</span><span>{{alertData.activity.activityStatus}}</span></p>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+  import {getBeforeDays} from "../utils/mUtils";
+
   export default {
     name: "ActivityManage",
     data() {
       return {
         searchData: {
           auth: '',
-          isDone: '',
-          aim:'',
+          isDone: 9,
           statusList: [{
-            key: '0',
+            key: 9,
             value: '全部'
           }, {
-            key: '1',
-            value: '已结束'
-          }, {
-            key: '2',
+            key: 0,
             value: '未开始'
           }, {
-            key: '3',
+            key: 1,
             value: '进行中'
-          }],
-          aimList:[{
-
+          }, {
+            key: 2,
+            value: '已结束'
           }],
           searchDate: ''
         },
-        tableData: []
+        tableData: [],
+        total: 5,
+        currentPage: 1,
+        alertData: {activity: {}, store: {}, applyActivity: {}, user: {}},
+        centerDialogVisible: false
       }
     },
     mounted() {
@@ -88,7 +108,27 @@
     },
     methods: {
       queryData() {
-
+        let url = '/yijian/opRoot/findActivity.do';
+        let userName = this.searchData.auth,
+          startTime = this.$transferDate(this.searchData.searchDate[0]),
+          endTime = this.$transferDate(this.searchData.searchDate[1]),
+          status = this.searchData.isDone,
+          startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
+          pageSize = 10;
+        let data = {
+          userName,
+          startTime,
+          endTime,
+          status,
+          startIndex,
+          pageSize
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.tableData = res;
+          this.total = res.length > 0 ? res.length : 1;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
       },
       headerStyle: function () {
         return {
@@ -98,7 +138,23 @@
         }
       },
       handleClick(d) {
-
+        let activityId = d.activityId;
+        let url = '/yijian/opRoot/getActivityDetail.do';
+        let data = {activityId};
+        this.$axios.dopost(url, data).then(res => {
+          this.alertData = res;
+          this.centerDialogVisible = true;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
+      }
+    },
+    watch: {
+      currentPage(n, o) {
+        this.queryData();
       }
     }
   }
