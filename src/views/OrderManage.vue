@@ -131,14 +131,14 @@
           mobile: this.searchData.telphone,
           name: this.searchData.userName,
           appointStatus: this.searchData.orderStatus,
-          startIndex: this.currentPage > 1 ? 0 : this.currentPage * 10 - 1,
+          startIndex: this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
           pageSize: 10,
           requestTimeStart: this.$transferDate(this.searchData.searchDate[0]),
           requestTimeEnd: this.$transferDate(this.searchData.searchDate[1])
         };
         this.$axios.dopost(url, data).then(res => {
           this.tableData = res;
-          this.total = res.length > 1 ? res.length : 1;
+          this.total = res.length > 0 ? res.length : 1;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
