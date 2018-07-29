@@ -94,7 +94,7 @@
       }
     },
     mounted() {
-      this.searchData.searchDate = [this.$getBeforeDays(7), new Date()];
+      this.searchData.searchDate = [getBeforeDays(7), new Date()];
       this.queryData();
     },
     methods: {
@@ -160,6 +160,11 @@
       },
       handleCurrentChange(val) {
         this.currentPage = val;
+      }
+    },
+    watch: {
+      currentPage(nval, oval) {
+        this.queryData();
       }
     },
     filters: {

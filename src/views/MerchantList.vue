@@ -12,8 +12,8 @@
           <el-form-item label="联系人">
             <el-input v-model="searchData.storeChat" placeholder="请输入联系人"></el-input>
           </el-form-item>
-          <el-form-item label="申请人">
-            <el-input v-model="searchData.storeApply" placeholder="请输入申请人"></el-input>
+          <el-form-item label="联系人电话">
+            <el-input v-model="searchData.storePhone" placeholder="请输入联系人电话"></el-input>
           </el-form-item>
         </el-row>
         <el-row>
@@ -39,20 +39,52 @@
         border
         :header-cell-style="headerStyle"
         style="width: 100%;text-align:center">
-        <el-table-column prop="monitorDynamicRegisterCount" label="商家ID"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthInfoCount" label="店名"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="联系人"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyCount" label="申请人"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="状态"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="申请时间"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="操作">
+        <el-table-column prop="storeId" label="商家ID"></el-table-column>
+        <el-table-column prop="name" label="店名"></el-table-column>
+        <el-table-column prop="userName" label="联系人"></el-table-column>
+        <el-table-column prop="userPhone" label="联系人电话"></el-table-column>
+        <el-table-column prop="storeStatus" label="状态">
+          <template slot-scope="scope">{{ scope.row.storeStatus | storeStatusFilter }}</template>
+        </el-table-column>
+        <el-table-column prop="createTime" label="申请时间"></el-table-column>
+        <el-table-column prop="" label="操作">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看商家信息</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :page-size="10"
+          layout="prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
     </div>
 
+    <el-dialog title="商家信息" :visible.sync="centerDialogVisible" width="30%" center>
+      <p><span>店名:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>品牌:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>场地面积:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>场址:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>营业时间:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>可预约时间段:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>单价:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>联系人:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>联系电话:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>营业执照:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>状态:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>申请人:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>手机号:</span><span>{{alertData.store.name}}</span></p>
+      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 0">
+        <el-button @click="handleChangeStoreInfo(false)">拒绝申请</el-button>
+        <el-button type="primary" @click="handleChangeStoreInfo(true)">通过审核</el-button>
+      </span>
+      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 3">
+        <el-button type="primary" @click="handleChangeStoreInfo(true)">通过审核</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -63,36 +95,67 @@
     name: "MerchantList",
     data() {
       return {
-        searchData:{
+        searchData: {
           storeID: '',
           storeName: '',
           storeChat: '',
-          storeApply:'',
+          storePhone: '',
           openList: [{
-            key: '0',
+            key: 0,
             value: '全部'
           }, {
-            key: '1',
+            key: 1,
             value: '待审核'
           }, {
-            key: '2',
+            key: 2,
             value: '已审核'
           }, {
-            key: '3',
+            key: 3,
             value: '已拒绝'
           }],
-          isOpen: '0',
+          isOpen: 0,
           searchDate: ''
         },
-        tableData: []
+        tableData: [],
+        total: 5,
+        currentPage: 1,
+        alertData: {user: {}, store: {}, storeSet: {}},
+        centerDialogVisible: false
       }
     },
     mounted() {
       this.searchData.searchDate = [getBeforeDays(7), new Date()];
+      this.queryData();
     },
     methods: {
       queryData() {
-
+        let url = '/yijian/opRoot/searchStore.do';
+        let storeId = this.searchData.storeID ? this.searchData.storeID : 0,
+          userName = this.searchData.storeChat,
+          name = this.searchData.storeName,
+          userPhone = this.searchData.storePhone,
+          storeStatus = this.searchData.isOpen,
+          createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
+          createTimeEnd = this.$transferDate(this.searchData.searchDate[1]),
+          startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
+          pageSize = 10;
+        let data = {
+          storeId,
+          userName,
+          name,
+          userPhone,
+          storeStatus,
+          createTimeStart,
+          createTimeEnd,
+          startIndex,
+          pageSize
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.tableData = res;
+          this.total = res.length > 0 ? res.length : 1;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
       },
       headerStyle: function () {
         return {
@@ -101,8 +164,55 @@
           "text-align": "center"
         }
       },
-      handleClick(d){
-
+      handleClick(d) {
+        let url = '/yijian/opRoot/getStoreDetail.do';
+        let storeId = d.storeId;
+        let data = {
+          storeId
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.centerDialogVisible = true;
+          this.alertData = res;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
+      },
+      handleChangeStoreInfo(flag) {
+        this.centerDialogVisible = false;
+        let url = '/yijian/opRoot/updateStoreStatus.do';
+        let data = {
+          storeId: this.alertData.store.storeId,
+          storeStatus: flag ? 1 : 2
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.queryData();
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      }
+    },
+    watch: {
+      currentPage(nval, oval) {
+        this.queryData();
+      }
+    },
+    filters: {
+      storeStatusFilter(d) {
+        if (d == 0) {
+          return '无状态';
+        }
+        if (d == 1) {
+          return '待审核';
+        }
+        if (d == 2) {
+          return '已审核';
+        }
+        if (d == 3) {
+          return '已拒绝';
+        }
       }
     }
   }

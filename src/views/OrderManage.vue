@@ -82,6 +82,8 @@
 </template>
 
 <script>
+  import {getBeforeDays} from "../utils/mUtils";
+
   export default {
     name: "OrderManage",
     data() {
@@ -120,7 +122,7 @@
       }
     },
     mounted() {
-      this.searchData.searchDate = [this.$getBeforeDays(7), new Date()];
+      this.searchData.searchDate = [getBeforeDays(7), new Date()];
       this.queryData();
     },
     methods: {
@@ -151,7 +153,6 @@
         }
       },
       handleClick(d) {
-        this.centerDialogVisible = true;
         let appointId = d.appointId;
         let url = '/yijian/opRoot/getAppointDetail.do';
         let data = {
@@ -159,12 +160,18 @@
         };
         this.$axios.dopost(url, data).then(res => {
           this.alertData = res;
+          this.centerDialogVisible = true;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
       },
       handleCurrentChange(val) {
         this.currentPage = val;
+      }
+    },
+    watch: {
+      currentPage(nval, oval) {
+        this.queryData();
       }
     },
     filters: {

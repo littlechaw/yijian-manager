@@ -34,18 +34,22 @@
         border
         :header-cell-style="headerStyle"
         style="width: 100%;text-align:center">
-        <el-table-column prop="monitorDynamicRegisterCount" label="商家ID"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthInfoCount" label="店名"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="联系人"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyCount" label="申请人"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="交易金额"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="交易时间"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="订单编号">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看商家信息</el-button>
-          </template>
-        </el-table-column>
+        <el-table-column prop="storeId" label="商家ID"></el-table-column>
+        <el-table-column prop="name" label="店名"></el-table-column>
+        <el-table-column prop="userName" label="联系人"></el-table-column>
+        <el-table-column prop="requestName" label="申请人"></el-table-column>
+        <el-table-column prop="price" label="交易金额"></el-table-column>
+        <el-table-column prop="createTime" label="交易时间"></el-table-column>
+        <el-table-column prop="outTradeNo" label="订单编号"></el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :page-size="10"
+          layout="prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
     </div>
 
   </div>
@@ -55,38 +59,70 @@
   import {getBeforeDays} from "../utils/mUtils";
 
   export default {
-        name: "MerchantWater",
-      data() {
+    name: "MerchantWater",
+    data() {
+      return {
+        searchData: {
+          storeID: '',
+          storeName: '',
+          storeChat: '',
+          storeApply: '',
+          searchDate: ''
+        },
+        tableData: [],
+        total: 5,
+        currentPage: 1,
+      }
+    },
+    mounted() {
+      this.searchData.searchDate = [getBeforeDays(7), new Date()];
+      this.queryData();
+    },
+    methods: {
+      queryData() {
+        let url = '/yijian/opRoot/getStoreTradingFlow.do';
+        let storeId = this.searchData.storeID ? this.searchData.storeID : 0,
+          name = this.searchData.storeName,
+          userName = this.searchData.storeChat,
+          requestName = this.searchData.storeApply,
+          startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
+          pageSize = 10,
+          createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
+          createTimeEnd = this.$transferDate(this.searchData.searchDate[1]);
+        let data = {
+          storeId,
+          name,
+          userName,
+          requestName,
+          startIndex,
+          pageSize,
+          createTimeStart,
+          createTimeEnd
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.tableData = res;
+          this.total = res.length > 0 ? res.length : 1;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      },
+      headerStyle: function () {
         return {
-          searchData:{
-            storeID: '',
-            storeName: '',
-            storeChat: '',
-            storeApply:'',
-            searchDate: ''
-          },
-          tableData: []
+          "color": "#000",
+          "font-weight": "normal",
+          "text-align": "center"
         }
       },
-      mounted() {
-        this.searchData.searchDate = [getBeforeDays(7), new Date()];
-      },
-      methods: {
-        queryData() {
-
-        },
-        headerStyle: function () {
-          return {
-            "color": "#000",
-            "font-weight": "normal",
-            "text-align": "center"
-          }
-        },
-        handleClick(d){
-
-        }
+      handleCurrentChange(val) {
+        this.currentPage = val;
+      }
+    },
+    watch: {
+      currentPage(nval, oval) {
+        this.queryData();
       }
     }
+  }
 </script>
 
 <style lang="less" scoped>
