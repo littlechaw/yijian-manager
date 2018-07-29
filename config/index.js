@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/yijian/opRoot/**': {
+      '/yijian/**': {
         target: 'http://212.64.16.120',
         changeOrigin: true,
         // pathRewrite: {
