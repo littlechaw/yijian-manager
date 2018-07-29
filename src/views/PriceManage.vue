@@ -63,6 +63,7 @@
         };
         this.$axios.dopost(url, data).then(res => {
           this.queryData();
+          this.$message.success('修改成功!');
           this.dialogFormVisible = false;
         }).catch(e => {
           this.$showErrorMessage(this, e);

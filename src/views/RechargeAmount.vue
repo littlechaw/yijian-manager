@@ -1,14 +1,21 @@
 <template>
-  <div>
-    <p>设置充值金额</p>
-    <p>第一档：100元</p>
-    <p>第二档：200元</p>
-    <p>第三档：500元</p>
-    <p>第四档：1000元</p>
-    <p>第五档：2000元</p>
+  <div class="header">
+    <h3>设置充值金额</h3>
+    <p v-for="(item,index) in priceList" :key="index">第{{index+1}}档：{{item}}元</p>
     <p>
-      <el-button type="primary" @click="modify">修改抽成比例</el-button>
+      <el-button type="primary" @click="dialogFormVisible = true">编&nbsp;&nbsp;辑</el-button>
     </p>
+    <el-dialog title="设置充值金额" :visible.sync="dialogFormVisible">
+      <p v-for="(item,index) in form.priceList" :key="index">
+        第{{index+1}}档：
+        <el-input type="text" v-model="form.priceList[index]"></el-input>
+        元
+      </p>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleClick">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -16,16 +23,53 @@
   export default {
     name: "RechargeAmount",
     data() {
-      return {}
+      return {
+        priceList: [],
+        dialogFormVisible: false,
+        form: {
+          priceList: []
+        }
+      }
+    },
+    mounted() {
+      this.queryData();
     },
     methods: {
-      modify() {
-
+      queryData() {
+        let url = '/yijian/opRoot/getRechargeMonry.do';
+        let data = {};
+        this.$axios.dopost(url, data).then(res => {
+          this.priceList = res;
+          for (let i = 0; i < res.length; i++) {
+            this.form.priceList.push('');
+          }
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      },
+      handleClick() {
+        let url='/yijian/opRoot/updateRechargeMoney.do';
+        let data=this.form.priceList;
+        this.$axios.dopost(url, data).then(res => {
+          this.queryData();
+          this.$message.success('修改成功!');
+          this.dialogFormVisible = false;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
       }
     }
   }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+  .header {
+    margin: 20px;
+    p {
+      margin: 10px 0px;
+    }
+    .el-input {
+      width: 80%;
+    }
+  }
 </style>
