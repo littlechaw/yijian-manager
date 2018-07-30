@@ -61,7 +61,7 @@
         })
       },
       handleClick() {
-        let url = '/yijian/opRoot/rootLogin.doo';
+        let url = '/yijian/opRoot/updatePriceInterval.do';
         let temp = this.form.priceList;
         let data = {};
         for (let i = 0; i < temp.length; i++) {

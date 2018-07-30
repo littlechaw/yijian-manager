@@ -48,8 +48,10 @@
         })
       },
       handleClick() {
-        let url='/yijian/opRoot/updateRechargeMoney.do';
-        let data=this.form.priceList;
+        let url = '/yijian/opRoot/updateRechargeMoney.do';
+        let data = {
+          rechargeMoney: this.form.priceList
+        };
         this.$axios.dopost(url, data).then(res => {
           this.queryData();
           this.$message.success('修改成功!');
