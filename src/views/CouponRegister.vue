@@ -5,12 +5,33 @@
       <p>名称：{{formData.name}}</p>
       <p>内容：减免实际计费时间{{formData.derateTime}}分钟</p>
       <p>使用期限：自领取时起{{formData.days}}日内</p>
+      <el-switch
+        v-model="formData.openFlag"
+        active-text="开启"
+        inactive-text="关闭"
+        disabled>
+      </el-switch>
       <p>
         <el-button @click="dialogFormVisible = true" type="primary">编&nbsp;&nbsp;辑</el-button>
       </p>
     </div>
     <el-dialog title="新用户注册优惠券发放" :visible.sync="dialogFormVisible">
-
+      <p>名称：
+        <el-input v-model="alertData.name"></el-input>
+      </p>
+      <p>内容：减免实际计费时间
+        <el-input v-model="alertData.derateTime"></el-input>
+        分钟
+      </p>
+      <p>使用期限：自领取时起
+        <el-input v-model="alertData.days"></el-input>
+        日内
+      </p>
+      <el-switch
+        v-model="alertData.openFlag"
+        active-text="开启"
+        inactive-text="关闭">
+      </el-switch>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="handleClick">确 定</el-button>
@@ -25,7 +46,8 @@
     data() {
       return {
         formData: {},
-        dialogFormVisible: false
+        dialogFormVisible: false,
+        alertData: {}
       }
     },
     mounted() {
@@ -36,13 +58,27 @@
         let url = '/yijian/opRoot/getRegisteredCoupon.do';
         let data = {};
         this.$axios.dopost(url, data).then(res => {
+          res.openFlag == 1 ? res.openFlag = true : res.openFlag = false;
           this.formData = res;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
       },
       handleClick(d) {
-
+        let url = '/opRoot/updateRegisteredCoupon.do';
+        let data = {
+          "openFlag": this.alertData.openFlag ? 1 : 0,
+          "name": this.alertData.name ? this.alertData.name : '',
+          "derateTime": this.alertData.derateTime ? this.alertData.derateTime : '',
+          "days": this.alertData.days ? this.alertData.days : ''
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.dialogFormVisible = false;
+          this.$message.success('修改成功!');
+        }).catch(e => {
+          this.dialogFormVisible = false;
+          this.$showErrorMessage(this, e);
+        })
       }
     }
   }
@@ -53,6 +89,15 @@
     margin: 20px;
     p {
       margin: 10px 0px;
+    }
+  }
+
+  .el-dialog {
+    p {
+      margin: 10px 0px;
+    }
+    .el-input {
+      width: 50%;
     }
   }
 </style>
