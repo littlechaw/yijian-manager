@@ -45,7 +45,9 @@
         </el-table-column>
       </el-table>
     </div>
-
+    <el-dialog title="文章详情" :visible.sync="dialogTableVisible">
+      <div v-html="alertData"></div>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,7 +67,9 @@
         },
         tableData: [],
         total: 5,
-        currentPage: 1
+        currentPage: 1,
+        dialogTableVisible: false,
+        alertData: ''
       }
     },
     mounted() {
@@ -119,7 +123,7 @@
           cancelButtonText: '取消'
         }).then(() => {
           let url = '/yijian/opRoot/deleteInfomation.do';
-          let informationId=d.informationId;
+          let informationId = d.informationId;
           let data = {
             informationId
           };
@@ -138,6 +142,7 @@
         });
       },
       articleDetail(d) {
+        this.dialogTableVisible = true;
         this.alertData = d.text;
       }
     },
