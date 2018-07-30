@@ -75,6 +75,7 @@
         this.$axios.dopost(url, data).then(res => {
           this.dialogFormVisible = false;
           this.$message.success('修改成功!');
+          this.queryData();
         }).catch(e => {
           this.dialogFormVisible = false;
           this.$showErrorMessage(this, e);
