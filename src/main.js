@@ -91,6 +91,26 @@ Vue.prototype.$transferDate = (date) => {
   return res;
 }
 
+Vue.filter('timeFilter', function ([a, b, c]) {
+  if (a && b) {
+    if (!c) {
+      return a + " ~ " + b;
+    } else {
+      let stime = Date.parse(new Date(a));
+      let etime = Date.parse(new Date(b));
+      let usedTime = etime - stime;
+      let days = Math.floor(usedTime / (24 * 3600 * 1000));
+      let leave1 = usedTime % (24 * 3600 * 1000);
+      let hours = Math.floor(leave1 / (3600 * 1000));
+      let leave2 = leave1 % (3600 * 1000);
+      let minutes = Math.floor(leave2 / (60 * 1000));
+      let time = days + "天" + hours + "时" + minutes + "分";
+      return time;
+    }
+  } else {
+    return '暂无'
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

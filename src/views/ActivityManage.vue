@@ -60,13 +60,14 @@
       <p><span>活动目标:</span><span>{{alertData.activity.target}}</span></p>
       <p><span>发起人:</span><span>{{alertData.user.name}}</span></p>
       <p><span>手机号:</span><span>{{alertData.user.mobile}}</span></p>
-      <p><span>发起人订单编号:</span><span>{{alertData.activity.outTradeNo}}</span></p>
+      <p><span>发起人订单编号:</span><span>{{alertData.activity.appointId}}</span></p>
       <p><span>商家:</span><span>{{alertData.store.name}}</span></p>
       <p><span>商家地址:</span><span>{{alertData.store.address}}</span></p>
-      <p><span>预约时间:</span><span>{{alertData.activity.startTime}}</span></p>
-      <p><span>计费时间:</span><span>暂无</span></p>
+      <p><span>预约时间:</span><span>{{[alertData.activity.startTime,alertData.activity.endTime,false] | timeFilter}}</span></p>
+      <p><span>计费时间:</span><span>{{[alertData.activity.startTime,alertData.activity.endTime,false] | timeFilter}}</span></p>
       <p><span>其他参与人:</span></p>
-      <p><span>活动状态:</span><span>{{alertData.activity.activityStatus}}</span></p>
+      <p v-for="item in alertData.applyActivity"><span>{{item.userName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机号：{{item.userPhoto}}</p>
+      <p><span>活动状态:</span><span>{{alertData.activity.activityStatus | activityStatusFilter}}</span></p>
     </el-dialog>
   </div>
 </template>
@@ -155,6 +156,19 @@
     watch: {
       currentPage(n, o) {
         this.queryData();
+      }
+    },
+    filters: {
+      activityStatusFilter(d) {
+        if (d == 0) {
+          return '未开始';
+        }
+        if (d == 1) {
+          return '进行中';
+        }
+        if (d == 2) {
+          return '已结束';
+        }
       }
     }
   }
