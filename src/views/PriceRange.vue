@@ -42,20 +42,22 @@
         let url = '/yijian/opRoot/getPriceInterVal.do';
         let data = {};
         this.$axios.dopost(url, data).then(res => {
-          let j = 0;
+          let j = 0, temp = [], temp2 = [];
           for (let i in res) {
             j++;
           }
           for (let i = 0; i < j / 2; i++) {
-            this.priceList.push({
+            temp.push({
               start: res['start' + (i + 1)],
               end: res['end' + (i + 1)]
             });
-            this.form.priceList.push({
+            temp2.push({
               start: '',
               end: ''
             })
           }
+          this.priceList = temp;
+          this.form.priceList = temp2;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
