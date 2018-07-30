@@ -46,7 +46,7 @@
         })
       },
       handleClick() {
-        let url = '/yijian/opRoot/rootLogin.doo';
+        let url = '/yijian/opRoot/updateProportion.do';
         let data = {
           proportion: this.form.percent
         };

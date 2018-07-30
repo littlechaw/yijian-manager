@@ -51,7 +51,7 @@
         })
       },
       handleClick() {
-        let url='/yijian/opRoot/rootLogin.doo';
+        let url='/yijian/opRoot/updateConsumeDiscount.do';
         let data=this.form;
         this.$axios.dopost(url, data).then(res => {
           this.queryData();
