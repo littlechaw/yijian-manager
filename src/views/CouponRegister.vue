@@ -1,30 +1,21 @@
 <template>
   <div>
-    <div class="header-top">
-      <el-row>
-        <el-button type="primary" @click="queryData">新&nbsp;&nbsp;增</el-button>
-      </el-row>
+    <div class="header">
+      <h3>新用户注册优惠劵发放</h3>
+      <p>名称：{{formData.name}}</p>
+      <p>内容：减免实际计费时间{{formData.derateTime}}分钟</p>
+      <p>使用期限：自领取时起{{formData.days}}日内</p>
+      <p>
+        <el-button @click="dialogFormVisible = true" type="primary">编&nbsp;&nbsp;辑</el-button>
+      </p>
     </div>
-    <div class="content">
-      <el-table
-        :data="tableData"
-        border
-        :header-cell-style="headerStyle"
-        style="width: 100%;text-align:center">
-        <el-table-column prop="monitorDynamicRegisterCount" label="序号"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthInfoCount" label="优惠券名称"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="优惠内容"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="有效时间"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="状态"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="使用数量/发放数量"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="操作">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+    <el-dialog title="新用户注册优惠券发放" :visible.sync="dialogFormVisible">
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleClick">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -33,19 +24,22 @@
     name: "Coupon",
     data() {
       return {
-        tableData: []
+        formData: {},
+        dialogFormVisible: false
       }
+    },
+    mounted() {
+      this.queryData();
     },
     methods: {
       queryData() {
-
-      },
-      headerStyle: function () {
-        return {
-          "color": "#000",
-          "font-weight": "normal",
-          "text-align": "center"
-        }
+        let url = '/yijian/opRoot/getRegisteredCoupon.do';
+        let data = {};
+        this.$axios.dopost(url, data).then(res => {
+          this.formData = res;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
       },
       handleClick(d) {
 
@@ -55,6 +49,10 @@
 </script>
 
 <style lang="less" scoped>
-  @import "../style/header";
-  @import "../style/content";
+  .header {
+    margin: 20px;
+    p {
+      margin: 10px 0px;
+    }
+  }
 </style>

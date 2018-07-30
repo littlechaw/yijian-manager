@@ -35,7 +35,7 @@
         style="width: 100%;text-align:center">
         <el-table-column prop="informationId" label="序号"></el-table-column>
         <el-table-column prop="header" label="文章标题"></el-table-column>
-        <el-table-column prop="type" label="文章目标"></el-table-column>
+        <el-table-column prop="typeText" label="文章目标"></el-table-column>
         <el-table-column prop="createTime" label="申请时间"></el-table-column>
         <el-table-column prop="" label="操作">
           <template slot-scope="scope">
@@ -114,7 +114,28 @@
         }
       },
       deleteArticle(d) {
+        this.$confirm('确认删除该文章吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(() => {
+          let url = '/yijian/opRoot/deleteInfomation.do';
+          let informationId=d.informationId;
+          let data = {
+            informationId
+          };
+          this.$axios.dopost(url, data).then(res => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            this.queryData();
+          }).catch(e => {
+            this.$showErrorMessage(this, e);
+          })
 
+        }).catch(() => {
+
+        });
       },
       articleDetail(d) {
         this.alertData = d.text;

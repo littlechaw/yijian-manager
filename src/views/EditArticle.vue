@@ -76,11 +76,13 @@
         let url = '/yijian/opRoot/saveInfomation.do';
         let header = this.header,
           text = this.content,
-          type = this.articleClass;
+          type = this.articleClass,
+          typeText = this.articleClassText;
         let data = {
           header,
           text,
-          type
+          type,
+          typeText
         };
         this.$axios.dopost(url, data).then(res => {
           this.$message.success('提交成功!');
@@ -89,6 +91,15 @@
         })
       }
     },
+    watch: {
+      articleClass(n, o) {
+        for (let i in this.articleClassList) {
+          if (this.articleClassList[i].typeId == n) {
+            this.articleClassText = this.articleClassList[i].typeName;
+          }
+        }
+      }
+    }
   }
 </script>
 
