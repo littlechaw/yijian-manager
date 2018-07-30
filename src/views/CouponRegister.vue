@@ -65,12 +65,17 @@
         })
       },
       handleClick(d) {
-        let url = '/opRoot/updateRegisteredCoupon.do';
+        let url = '/yijian/opRoot/updateRegisteredCoupon.do';
+        let openFlag = this.alertData.openFlag ? 1 : 0,
+          name = this.alertData.name ? this.alertData.name : '',
+          derateTime = this.alertData.derateTime ? +this.alertData.derateTime : 0,
+          days = this.alertData.days ? +this.alertData.days : 0;
+
         let data = {
-          "openFlag": this.alertData.openFlag ? 1 : 0,
-          "name": this.alertData.name ? this.alertData.name : '',
-          "derateTime": this.alertData.derateTime ? this.alertData.derateTime : '',
-          "days": this.alertData.days ? this.alertData.days : ''
+          openFlag,
+          name,
+          derateTime,
+          days
         };
         this.$axios.dopost(url, data).then(res => {
           this.dialogFormVisible = false;
