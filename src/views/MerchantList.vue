@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <el-dialog title="商家信息" :visible.sync="centerDialogVisible" width="30%" center>
+    <el-dialog title="商家信息" :visible.sync="centerDialogVisible" width="50%" center>
       <p><span>店名:</span><span>{{alertData.store.name}}</span></p>
       <p><span>品牌:</span><span>{{alertData.store.name}}</span></p>
       <p><span>场地面积:</span><span>{{alertData.store.siteArea}}</span></p>
