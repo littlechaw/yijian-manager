@@ -74,14 +74,14 @@
       <p><span>联系人:</span><span>{{alertData.store.userName}}</span></p>
       <p><span>联系电话:</span><span>{{alertData.store.phone}}</span></p>
       <p><span>营业执照:</span><span>{{alertData.store.name}}</span></p>
-      <p><span>状态:</span><span>{{alertData.store.storeStatus}}</span></p>
+      <p><span>状态:</span><span>{{alertData.store.storeStatus | storeStatusFilter}}</span></p>
       <p><span>申请人:</span><span>{{alertData.store.userName}}</span></p>
       <p><span>手机号:</span><span>{{alertData.store.userPhone}}</span></p>
       <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 0">
         <el-button @click="handleChangeStoreInfo(false)">拒绝申请</el-button>
         <el-button type="primary" @click="handleChangeStoreInfo(true)">通过审核</el-button>
       </span>
-      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 3">
+      <span slot="footer" class="dialog-footer" v-if="alertData.store.storeStatus == 2">
         <el-button type="primary" @click="handleChangeStoreInfo(true)">通过审核</el-button>
       </span>
     </el-dialog>
