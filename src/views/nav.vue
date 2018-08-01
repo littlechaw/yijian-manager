@@ -34,11 +34,11 @@
           <el-submenu index="7">
             <template slot="title"><i class="el-icon-setting"></i>配置</template>
             <el-menu-item index="classificationofarticles">客服电话</el-menu-item>
+            <el-menu-item index="appointmenttime">用户协议</el-menu-item>
             <el-menu-item index="couponregister">注册优惠券</el-menu-item>
             <el-menu-item index="couponrecord">优惠券记录</el-menu-item>
             <el-menu-item index="proportionate">抽成比例</el-menu-item>
             <el-menu-item index="rechargeamount">充值金额</el-menu-item>
-            <!--<el-menu-item index="appointmenttime">预约时间</el-menu-item>-->
             <el-menu-item index="gradediscount">满额折扣</el-menu-item>
             <el-menu-item index="pricerange">价格区间</el-menu-item>
           </el-submenu>
