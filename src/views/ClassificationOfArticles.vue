@@ -1,26 +1,13 @@
 <template>
   <div>
-    <div class="header-top">
-      <el-row>
-        <el-button type="primary" @click="queryData">新&nbsp;&nbsp;增</el-button>
-      </el-row>
-    </div>
-    <div class="content">
-      <el-table
-        :data="tableData"
-        border
-        :header-cell-style="headerStyle"
-        style="width: 100%;text-align:center">
-        <el-table-column prop="monitorDynamicRegisterCount" label="序号"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthInfoCount" label="分类名称"></el-table-column>
-        <el-table-column prop="monitorDynamicAuthBankCount" label="添加时间"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="操作">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+    <h3>客服电话设置</h3>
+    <p v-if="!inEdit">{{phone}}</p>
+    <p v-if="inEdit">
+      <el-input v-model="phone"></el-input>
+    </p>
+    <p>
+      <el-button type="primary" @click="handleClick">编&nbsp;&nbsp;辑</el-button>
+    </p>
   </div>
 </template>
 
@@ -29,25 +16,33 @@
     name: "ClassificationOfArticles",
     data() {
       return {
-        tableData: []
+        phone: '',
+        inEdit: false
       }
     },
+    mounted() {
+      this.queryData();
+    },
     methods: {
-      headerStyle: function () {
-        return {
-          "color": "#000",
-          "font-weight": "normal",
-          "text-align": "center"
-        }
+      queryData() {
+        this.phone = '123456789';
       },
-      handleClick(d) {
-
+      handleClick() {
+        this.inEdit = !this.inEdit;
       }
     }
   }
 </script>
 
 <style lang="less" scoped>
-  @import "../style/header";
-  @import "../style/content";
+  h3 {
+    margin: 20px;
+  }
+
+  p {
+    margin: 10px 20px;
+    .el-input {
+      width: 30%;
+    }
+  }
 </style>

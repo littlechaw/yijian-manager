@@ -33,7 +33,7 @@
           </el-submenu>
           <el-submenu index="7">
             <template slot="title"><i class="el-icon-setting"></i>配置</template>
-            <!--<el-menu-item index="classificationofarticles">文章分类设置</el-menu-item>-->
+            <el-menu-item index="classificationofarticles">客服电话</el-menu-item>
             <el-menu-item index="couponregister">注册优惠券</el-menu-item>
             <el-menu-item index="couponrecord">优惠券记录</el-menu-item>
             <el-menu-item index="proportionate">抽成比例</el-menu-item>
