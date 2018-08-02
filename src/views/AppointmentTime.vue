@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="edit_container">
+    <div class="edit_container" v-if="inEdit">
       <h3>用户协议</h3>
       <el-row>
         <quill-editor v-model="content"
@@ -12,8 +12,13 @@
         </quill-editor>
       </el-row>
     </div>
+    <div class="edit_container" v-if="!inEdit">
+      <h3>用户协议</h3>
+      <div v-html="content"></div>
+    </div>
     <div class="submit_btn">
-      <el-button type="primary" @click="submit">保存</el-button>
+      <el-button type="primary" @click="submit" v-if="inEdit">保存</el-button>
+      <el-button type="primary" @click="inEdit = true" v-if="!inEdit">编辑</el-button>
     </div>
     <!-- 图片上传组件辅助-->
     <el-upload
@@ -59,6 +64,7 @@
     name: "AppointmentTime",
     data() {
       return {
+        inEdit: false,
         quillUpdateImg: false,
         header: '',
         token: {token: sessionStorage.token},
@@ -85,6 +91,9 @@
         }
       }
     },
+    mounted() {
+      this.queryData();
+    },
     components: {
       quillEditor,
     },
@@ -94,6 +103,15 @@
       }
     },
     methods: {
+      queryData() {
+        let url = '/yijian/opRoot/getRegisteAgreement.do';
+        let data = {};
+        this.$axios.dopost(url, data).then(res => {
+          this.content = res;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      },
       beforeUpload() {
         this.quillUpdateImg = true
       },
@@ -121,10 +139,13 @@
         console.log(d);
       },
       submit() {
-        let url = '';
-        let data = {};
+        let url = '/yijian/opRoot/updateRegisteAgreement.do';
+        let data = {
+          agreement: this.content
+        };
         this.$axios.dopost(url, data).then(res => {
           this.$message.success('提交成功!');
+          this.inEdit = false;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
@@ -144,4 +165,9 @@
   .editer {
     height: 350px;
   }
+
+  .submit_btn {
+    text-align: center;
+  }
+
 </style>

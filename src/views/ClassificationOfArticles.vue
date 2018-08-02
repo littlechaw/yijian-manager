@@ -6,7 +6,8 @@
       <el-input v-model="phone"></el-input>
     </p>
     <p>
-      <el-button type="primary" @click="handleClick">编&nbsp;&nbsp;辑</el-button>
+      <el-button type="primary" @click="inEdit = true" v-if="!inEdit">编&nbsp;&nbsp;辑</el-button>
+      <el-button type="primary" @click="handleClick" v-if="inEdit">保&nbsp;&nbsp;存</el-button>
     </p>
   </div>
 </template>
@@ -25,10 +26,23 @@
     },
     methods: {
       queryData() {
-        this.phone = '123456789';
+        let url = '/yijian/opRoot/getConsumerPhone.do';
+        let data = {};
+        this.$axios.dopost(url, data).then(res => {
+          this.phone = res;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
       },
       handleClick() {
-        this.inEdit = !this.inEdit;
+        let url = '/yijian/opRoot/updateConsumerPhone.do';
+        let data = {phone: this.phone};
+        this.$axios.dopost(url, data).then(res => {
+          this.$message.success('修改成功');
+          this.inEdit = false;
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
       }
     }
   }
