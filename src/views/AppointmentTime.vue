@@ -24,7 +24,6 @@
     <el-upload
       class="avatar-uploader"
       :action="serverUrl"
-      name="img"
       :headers="token"
       :show-file-list="false"
       :on-success="uploadSuccess"
@@ -70,6 +69,7 @@
         token: {token: sessionStorage.token},
         content: '<h3>文本编辑</h3>',
         serverUrl: '/yijian/upload',
+        imgUrl: 'http://212.64.16.120/yijian/download?ossId=',
         editorOption: {
           placeholder: '',
           theme: 'snow',  // or 'bubble'
@@ -79,8 +79,7 @@
               handlers: {
                 'image': function (value) {
                   if (value) {
-                    // 触发input框选择图片文件
-                    document.querySelector('.avatar-uploader input').click()
+                    document.querySelector('.avatar-uploader input').click();
                   } else {
                     this.quill.format('image', false);
                   }
@@ -113,14 +112,13 @@
         })
       },
       beforeUpload() {
-        this.quillUpdateImg = true
+        this.quillUpdateImg = true;
       },
-
       uploadSuccess(res, file) {
         let quill = this.$refs.myQuillEditor.quill
-        if (res.code === '200' && res.info !== null) {
+        if (res.code == '1') {
           let length = quill.getSelection().index;
-          quill.insertEmbed(length, 'image', res.info)
+          quill.insertEmbed(length, 'image', this.imgUrl + res.body)
           quill.setSelection(length + 1)
         } else {
           this.$message.error('图片插入失败')
