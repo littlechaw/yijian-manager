@@ -76,7 +76,7 @@
         token: {token: sessionStorage.token},
         content: '<h3>文本编辑</h3>',
         serverUrl: '/yijian/upload',
-        imgUrl: 'http://212.64.16.120/yijian/download?ossId=',
+        imgUrl: this.$store.getters.getImgUrl,
         editorOption: {
           placeholder: '',
           theme: 'snow',  // or 'bubble'
