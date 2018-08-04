@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h3>设置抽成比例</h3>
-    <p>当前抽成比例：{{percent}}% </p>
+    <p>当前抽成比例：{{percent}} </p>
     <p>
       <el-button type="primary" @click="dialogFormVisible = true">修改抽成比例</el-button>
     </p>
@@ -29,7 +29,7 @@
         form: {
           percent: ''
         },
-        formLabelWidth:'120px'
+        formLabelWidth: '120px'
       }
     },
     mounted() {
@@ -47,6 +47,14 @@
       },
       handleClick() {
         let url = '/yijian/opRoot/updateProportion.do';
+        if (isNaN(this.form.percent)) {
+          this.$message.error('请输入数字')
+          return;
+        }
+        if (!isNaN(+this.form.percent) && +this.form.percent > 1) {
+          this.$message.error('请输入小于1的数字')
+          return;
+        }
         let data = {
           proportion: this.form.percent
         };
