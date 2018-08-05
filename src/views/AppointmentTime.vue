@@ -131,10 +131,8 @@
         this.$message.error('图片插入失败')
       },
       onEditorReady(editor) {
-        console.log('editor ready!', editor)
       },
       onEditorChange(d) {
-        console.log(d);
       },
       submit() {
         let url = '/yijian/opRoot/updateRegisteAgreement.do';

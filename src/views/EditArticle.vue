@@ -141,10 +141,8 @@
         })
       },
       onEditorReady(editor) {
-        console.log('editor ready!', editor)
       },
       onEditorChange(d) {
-        console.log(d);
       },
       submit() {
         let url = '/yijian/opRoot/saveInfomation.do';
