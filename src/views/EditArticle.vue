@@ -149,12 +149,14 @@
         let header = this.header,
           text = this.content,
           type = this.articleClass,
-          typeText = this.articleClassText;
+          typeText = this.articleClassText,
+          content = this.content.replace(/<[^>]*>|/g, "");
         let data = {
           header,
           text,
           type,
-          typeText
+          typeText,
+          content
         };
         this.$axios.dopost(url, data).then(res => {
           this.$message.success('提交成功!');
