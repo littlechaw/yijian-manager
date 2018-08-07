@@ -85,7 +85,7 @@
           name = this.searchData.storeName,
           userName = this.searchData.storeChat,
           requestName = this.searchData.storeApply,
-          startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
+          startIndex = this.currentPage == 1 ? 0 : (this.currentPage-1) * 10 - 1,
           pageSize = 10,
           createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
           createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]);

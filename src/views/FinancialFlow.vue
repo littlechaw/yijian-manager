@@ -70,7 +70,7 @@
         let url = '/yijian/opRoot/findServiceFlow.do';
         let outTradeNo = this.searchData.orderID ? this.searchData.orderID : 0,
           name = this.searchData.storeName,
-          startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
+          startIndex = this.currentPage == 1 ? 0 : (this.currentPage-1) * 10 - 1,
           pageSize = 10,
           createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
           createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]);

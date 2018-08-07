@@ -101,7 +101,7 @@
           timeStart = this.$transferDate(this.searchData.searchDate[0]),
           timeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]),
           type = this.searchData.articleClass,
-          startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
+          startIndex = this.currentPage == 1 ? 0 : (this.currentPage-1) * 10 - 1,
           pageSize = 10;
         let data = {
           header,
