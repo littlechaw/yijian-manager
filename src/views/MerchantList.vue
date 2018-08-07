@@ -73,7 +73,7 @@
       <p><span>单价:</span><span>{{alertData.store.price}}</span></p>
       <p><span>联系人:</span><span>{{alertData.store.userName}}</span></p>
       <p><span>联系电话:</span><span>{{alertData.store.phone}}</span></p>
-      <p><span>营业执照:</span><span><img :src="imgUrl+alertData.store.businessLicense" style="width:400px"></span></p>
+      <p><span>营业执照:</span><span><img :src="imgUrl+alertData.store.businessLicense" style="width:500px"></span></p>
       <p><span>状态:</span><span>{{alertData.store.storeStatus | storeStatusFilter}}</span></p>
       <p><span>申请人:</span><span>{{alertData.store.userName}}</span></p>
       <p><span>手机号:</span><span>{{alertData.store.userPhone}}</span></p>
@@ -137,7 +137,7 @@
           userPhone = this.searchData.storePhone,
           storeStatus = this.searchData.isOpen,
           createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
-          createTimeEnd = this.$transferDate(this.searchData.searchDate[1]),
+          createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]),
           startIndex = this.currentPage == 1 ? 0 : this.currentPage * 10 - 1,
           pageSize = 10;
         let data = {

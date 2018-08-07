@@ -91,6 +91,15 @@ Vue.prototype.$transferDate = (date) => {
   return res;
 }
 
+Vue.prototype.$transferDateAddsuffix = (date) => {
+  if (!date) {
+    return;
+  }
+  let d = new Date(date);
+  let res = d.getFullYear() + '-' + ((d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)) + '-' + (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) + ' 23:59:59';
+  return res;
+}
+
 Vue.filter('timeFilter', function ([a, b, c]) {
   if (a && b) {
     if (!c) {
