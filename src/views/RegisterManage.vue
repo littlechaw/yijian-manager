@@ -106,7 +106,7 @@
         let userStatus = this.searchData.isJinyong;
         let createTimeStart = this.$transferDate(this.searchData.searchDate[0]);
         let createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]);
-        let startIndex = this.currentPage == 1 ? 0 : (this.currentPage-1) * 10 - 1,
+        let startIndex = this.currentPage == 1 ? 0 : (this.currentPage-1) * 10 - 1;
         let pageSize = 10;
         let data = {
           userId,
