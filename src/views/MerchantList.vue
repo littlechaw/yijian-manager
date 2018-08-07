@@ -65,7 +65,7 @@
 
     <el-dialog title="商家信息" :visible.sync="centerDialogVisible" width="50%" center>
       <p><span>店名:</span><span>{{alertData.store.name}}</span></p>
-      <p><span>品牌:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>品牌:</span><span>{{alertData.store.brands}}</span></p>
       <p><span>场地面积:</span><span>{{alertData.store.siteArea}}</span></p>
       <p><span>场址:</span><span>{{alertData.store.address}}</span></p>
       <p><span>营业时间:</span><span>{{[alertData.storeSet.runTimeStart,alertData.storeSet.runTimeEnd,false] | timeFilter}}</span></p>
@@ -73,7 +73,7 @@
       <p><span>单价:</span><span>{{alertData.store.price}}</span></p>
       <p><span>联系人:</span><span>{{alertData.store.userName}}</span></p>
       <p><span>联系电话:</span><span>{{alertData.store.phone}}</span></p>
-      <p><span>营业执照:</span><span>{{alertData.store.name}}</span></p>
+      <p><span>营业执照:</span><span><img :src="imgUrl+alertData.store.businessLicense" style="width:400px"></span></p>
       <p><span>状态:</span><span>{{alertData.store.storeStatus | storeStatusFilter}}</span></p>
       <p><span>申请人:</span><span>{{alertData.store.userName}}</span></p>
       <p><span>手机号:</span><span>{{alertData.store.userPhone}}</span></p>
@@ -95,6 +95,7 @@
     name: "MerchantList",
     data() {
       return {
+        imgUrl: this.$store.getters.getImgUrl,
         searchData: {
           storeID: '',
           storeName: '',

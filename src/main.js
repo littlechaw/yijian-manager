@@ -94,7 +94,7 @@ Vue.prototype.$transferDate = (date) => {
 Vue.filter('timeFilter', function ([a, b, c]) {
   if (a && b) {
     if (!c) {
-      return a + " ~ " + b;
+      return a.substring(11, a.length) + " ~ " + b.substring(11, b.length);
     } else {
       let stime = Date.parse(new Date(a));
       let etime = Date.parse(new Date(b));
