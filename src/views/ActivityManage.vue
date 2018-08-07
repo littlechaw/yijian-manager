@@ -40,7 +40,7 @@
         <el-table-column prop="name" label="发布人"></el-table-column>
         <el-table-column prop="activityStatus" label="状态"></el-table-column>
         <el-table-column prop="createTime" label="发布时间"></el-table-column>
-        <el-table-column prop="monitorDynamicApplyPCT" label="操作">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看活动详情</el-button>
           </template>
@@ -106,6 +106,7 @@
     },
     mounted() {
       this.searchData.searchDate = [getBeforeDays(7), new Date()];
+      this.queryData();
     },
     methods: {
       queryData() {
@@ -125,8 +126,8 @@
           pageSize
         };
         this.$axios.dopost(url, data).then(res => {
-          this.tableData = res;
-          this.total = res.length > 0 ? res.length : 1;
+          this.tableData = res.data;
+          this.total = res.total;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })

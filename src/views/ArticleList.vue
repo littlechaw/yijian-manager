@@ -44,6 +44,14 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :page-size="10"
+          layout="prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
     </div>
     <el-dialog title="文章详情" :visible.sync="dialogTableVisible">
       <div v-html="alertData"></div>
@@ -104,8 +112,8 @@
           pageSize
         };
         this.$axios.dopost(url, data).then(res => {
-          this.tableData = res;
-          this.total = res.length > 0 ? res.length : 1;
+          this.tableData = res.data;
+          this.total = res.total;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
@@ -144,10 +152,16 @@
       articleDetail(d) {
         this.dialogTableVisible = true;
         this.alertData = d.text;
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
       }
     },
     filters: {},
     watch: {
+      currentPage(n, o) {
+        this.queryData();
+      },
       "searchData.articleClass"(n, o) {
         if (o == 0) {
           this.queryData();

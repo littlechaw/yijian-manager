@@ -83,8 +83,8 @@
           createTimeEnd
         };
         this.$axios.dopost(url, data).then(res => {
-          this.tableData = res;
-          this.total = res.length > 0 ? res.length : 1;
+          this.tableData = res.data;
+          this.total = res.total;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
