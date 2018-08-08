@@ -40,7 +40,9 @@
         <el-table-column prop="mobile" label="手机号"></el-table-column>
         <el-table-column prop="name" label="昵称"></el-table-column>
         <el-table-column prop="appointId" label="订单编号"></el-table-column>
-        <el-table-column prop="appointStatus" label="状态"></el-table-column>
+        <el-table-column prop="appointStatus" label="状态">
+          <template slot-scope="scope">{{scope.row.appointStatus | stautsFilter}}</template>
+        </el-table-column>
         <el-table-column prop="requestTime" label="订单生成时间"></el-table-column>
         <el-table-column prop="monitorDynamicApplyPCT" label="操作">
           <template slot-scope="scope">
