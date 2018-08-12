@@ -1,25 +1,30 @@
 <template>
-  <div class="header">
-    <h3>设置充值金额</h3>
-    <p v-for="(item,index) in priceList" :key="index">第{{index+1}}档：{{item}}元</p>
-    <p>
-      <el-button type="primary" @click="dialogFormVisible = true">编&nbsp;&nbsp;辑</el-button>
-    </p>
-    <el-dialog title="设置充值金额" :visible.sync="dialogFormVisible">
-      <p v-for="(item,index) in form.priceList" :key="index">
-        第{{index+1}}档：
-        <el-input type="text" v-model="form.priceList[index]"></el-input>
-        元
+  <div>
+    <headTop></headTop>
+    <div class="header">
+      <h3>设置充值金额</h3>
+      <p v-for="(item,index) in priceList" :key="index">第{{index+1}}档：{{item}}元</p>
+      <p>
+        <el-button type="primary" @click="dialogFormVisible = true">编&nbsp;&nbsp;辑</el-button>
       </p>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleClick">确 定</el-button>
-      </div>
-    </el-dialog>
+      <el-dialog title="设置充值金额" :visible.sync="dialogFormVisible">
+        <p v-for="(item,index) in form.priceList" :key="index">
+          第{{index+1}}档：
+          <el-input type="text" v-model="form.priceList[index]"></el-input>
+          元
+        </p>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handleClick">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "RechargeAmount",
     data() {
@@ -30,6 +35,9 @@
           priceList: []
         }
       }
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.queryData();

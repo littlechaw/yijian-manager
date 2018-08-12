@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headTop></headTop>
     <div class="edit_container" v-if="inEdit">
       <h3>用户协议</h3>
       <el-row>
@@ -38,6 +39,8 @@
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
+  import headTop from '@/components/HeadTop'
+
 
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -95,6 +98,7 @@
     },
     components: {
       quillEditor,
+      headTop
     },
     computed: {
       editor() {

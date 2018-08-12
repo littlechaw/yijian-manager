@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <headTop></headTop>
     <div class="edit_container">
       <el-row type="flex" :gutter="20">
         <el-col class="inner-title" style="width: 100px;">文章标题:</el-col>
@@ -46,6 +46,8 @@
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
+  import headTop from '@/components/HeadTop'
+
 
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -104,6 +106,7 @@
     },
     components: {
       quillEditor,
+      headTop
     },
     computed: {
       editor() {

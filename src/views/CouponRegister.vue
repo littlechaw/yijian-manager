@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headTop></headTop>
     <div class="header">
       <h3>新用户注册优惠劵发放</h3>
       <p>名称：{{formData.name}}</p>
@@ -41,6 +42,8 @@
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "Coupon",
     data() {
@@ -49,6 +52,9 @@
         dialogFormVisible: false,
         alertData: {}
       }
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.queryData();

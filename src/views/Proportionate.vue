@@ -1,25 +1,30 @@
 <template>
-  <div class="header">
-    <h3>设置抽成比例</h3>
-    <p>当前抽成比例：{{percent}} </p>
-    <p>
-      <el-button type="primary" @click="dialogFormVisible = true">修改抽成比例</el-button>
-    </p>
-    <el-dialog title="设置抽成比例" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="抽成比例：" :label-width="formLabelWidth">
-          <el-input v-model="form.percent" auto-complete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleClick">确 定</el-button>
-      </div>
-    </el-dialog>
+  <div>
+    <headTop></headTop>
+    <div class="header">
+      <h3>设置抽成比例</h3>
+      <p>当前抽成比例：{{percent}} </p>
+      <p>
+        <el-button type="primary" @click="dialogFormVisible = true">修改抽成比例</el-button>
+      </p>
+      <el-dialog title="设置抽成比例" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="抽成比例：" :label-width="formLabelWidth">
+            <el-input v-model="form.percent" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handleClick">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "Proportionate",
     data() {
@@ -31,6 +36,9 @@
         },
         formLabelWidth: '120px'
       }
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.queryData();

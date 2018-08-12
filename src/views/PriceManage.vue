@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headTop></headTop>
     <div class="header">
       <p>最低消费：{{minConsumption}}元</p>
       <p>单价：{{price}}元/30分钟</p>
@@ -25,6 +26,8 @@
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "PriceManage",
     data() {
@@ -38,6 +41,9 @@
         formLabelWidth: '120px',
         dialogFormVisible: false
       };
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.queryData();

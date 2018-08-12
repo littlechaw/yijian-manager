@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headTop></headTop>
     <div class="header-top">
       <el-row>
         <el-button type="primary" @click="addTarget">新&nbsp;&nbsp;增</el-button>
@@ -25,12 +26,17 @@
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "TargetSetting",
     data() {
       return {
         tableData: []
       }
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.queryData();

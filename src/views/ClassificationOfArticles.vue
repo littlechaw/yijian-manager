@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headTop></headTop>
     <h3>客服电话设置</h3>
     <p v-if="!inEdit">{{phone}}</p>
     <p v-if="inEdit">
@@ -13,6 +14,8 @@
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "ClassificationOfArticles",
     data() {
@@ -20,6 +23,9 @@
         phone: '',
         inEdit: false
       }
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.queryData();

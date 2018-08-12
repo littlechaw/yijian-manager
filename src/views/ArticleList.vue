@@ -1,5 +1,6 @@
 <template>
   <div>
+    <headTop></headTop>
     <div class="header-top">
       <el-form :inline="true" :model="searchData" class="demo-form-inline">
         <el-row>
@@ -61,6 +62,7 @@
 
 <script>
   import {getBeforeDays} from "../utils/mUtils";
+  import headTop from '@/components/HeadTop'
 
   export default {
     name: "ArticleList",
@@ -79,6 +81,9 @@
         dialogTableVisible: false,
         alertData: ''
       }
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.searchData.searchDate = [getBeforeDays(7), new Date()];

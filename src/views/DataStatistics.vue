@@ -1,5 +1,6 @@
 <template>
 <div>
+  <headTop></headTop>
   <div class="header-top">
     用户统计：
   </div>
@@ -16,8 +17,13 @@
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
-    name: "DataStatistics"
+    name: "DataStatistics",
+    components: {
+      headTop
+    },
   }
 </script>
 

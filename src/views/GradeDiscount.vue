@@ -1,31 +1,36 @@
 <template>
-  <div class="header">
-    <h3>设置用户满额折扣</h3>
-    <p>当月消费满{{consume}}元，下月所有消费折扣打{{discount}}折</p>
-    <p>
-      <el-button type="primary" @click="dialogFormVisible = true">编辑</el-button>
-    </p>
-    <p class="smallFont">注：折扣月消费满额，下月无折扣</p>
-    <el-dialog title="定价管理" :visible.sync="dialogFormVisible">
+  <div>
+    <headTop></headTop>
+    <div class="header">
+      <h3>设置用户满额折扣</h3>
+      <p>当月消费满{{consume}}元，下月所有消费折扣打{{discount}}折</p>
       <p>
-        当月消费
-        <el-input type="text" v-model="form.consume"></el-input>
-        元
+        <el-button type="primary" @click="dialogFormVisible = true">编辑</el-button>
       </p>
-      <p>
-        下月折扣
-        <el-input type="text" v-model="form.discount"></el-input>
-        折
-      </p>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleClick">确 定</el-button>
-      </div>
-    </el-dialog>
+      <p class="smallFont">注：折扣月消费满额，下月无折扣</p>
+      <el-dialog title="定价管理" :visible.sync="dialogFormVisible">
+        <p>
+          当月消费
+          <el-input type="text" v-model="form.consume"></el-input>
+          元
+        </p>
+        <p>
+          下月折扣
+          <el-input type="text" v-model="form.discount"></el-input>
+          折
+        </p>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handleClick">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "GradeDiscount",
     data() {
@@ -35,6 +40,9 @@
         dialogFormVisible: false,
         form: {}
       }
+    },
+    components: {
+      headTop
     },
     mounted() {
       this.queryData();
