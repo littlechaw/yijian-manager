@@ -71,7 +71,7 @@
       <p><span>场址:</span><span>{{alertData.store.address}}</span></p>
       <p><span>营业时间:</span><span>{{[alertData.storeSet.runTimeStart,alertData.storeSet.runTimeEnd,false] | timeFilter}}</span></p>
       <p><span>可预约时间段:</span><span>{{[alertData.storeSet.appointStartTime,alertData.storeSet.appointEndTime,false] | timeFilter}}</span></p>
-      <p><span>单价:</span><span>¥{{alertData.store.price}}</span></p>
+      <p><span>单价:</span><span>{{alertData.store.price}}元/30分钟</span></p>
       <p><span>联系人:</span><span>{{alertData.store.userName}}</span></p>
       <p><span>联系电话:</span><span>{{alertData.store.userPhone}}</span></p>
       <p><span>营业执照:</span><span><img :src="imgUrl+alertData.store.businessLicense" style="width:500px"></span></p>
