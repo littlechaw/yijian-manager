@@ -136,12 +136,8 @@
         let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
         if (flag) {
           let url = '/yijian/opRoot/getRegisNumForExcel.do';
-          var a1 = document.createElement('a');
-          a1.setAttribute('href', this.serverUrl + url + '?startTime=' + startTime + '&endTime=' + endTime);
-          var body = document.querySelector('body');
-          body.appendChild(a1);
-          a1.click();
-          a1.remove();
+          let data = {url, startTime, endTime};
+          this.doDownload(data);
         } else {
           let url = '/yijian/opRoot/getRegisNum.do';
           let data = {
@@ -156,12 +152,14 @@
         }
       },
       getRechargeUserNumber(flag) {
+        let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
+        let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
         if (flag) {
-
+          let url = '/yijian/opRoot/getRechargeForExcel.do';
+          let data = {url, startTime, endTime};
+          this.doDownload(data);
         } else {
           let url = '/yijian/opRoot/getRechargeNum.do';
-          let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
-          let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
           let data = {
             startTime,
             endTime
@@ -174,12 +172,14 @@
         }
       },
       getTransactionUserNumber(flag) {
+        let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
+        let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
         if (flag) {
-
+          let url = '/yijian/opRoot/getTransactionNumForExcel.do';
+          let data = {url, startTime, endTime};
+          this.doDownload(data);
         } else {
           let url = '/yijian/opRoot/getTransactionNum.do';
-          let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
-          let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
           let data = {
             startTime,
             endTime
@@ -192,12 +192,14 @@
         }
       },
       getSumRechargeUserNumber(flag) {
+        let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
+        let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
         if (flag) {
-
+          let url = '/yijian/opRoot/getRechargeMoneyForExcel.do';
+          let data = {url, startTime, endTime};
+          this.doDownload(data);
         } else {
           let url = '/yijian/opRoot/getRechargeMoney.do';
-          let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
-          let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
           let data = {
             startTime,
             endTime
@@ -210,13 +212,15 @@
         }
       },
       getStationFund(flag) {
-        console.info(flag);
+        let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
+        let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
         if (flag) {
-
+          let url = '/yijian/opRoot/findAllStandingFundsForExcel.do';
+          let data = {url, startTime, endTime};
+          this.doDownload(data);
         } else {
           let url = '/yijian/opRoot/getStandingFunds.do';
-          let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
-          let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
+
           let data = {
             startTime,
             endTime
@@ -229,12 +233,14 @@
         }
       },
       getBusinessRunningWater(flag) {
+        let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
+        let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
         if (flag) {
-
+          let url = '/yijian/opRoot/getTransactionMoneyForExcel.do';
+          let data = {url, startTime, endTime};
+          this.doDownload(data);
         } else {
           let url = '/yijian/opRoot/getTransactionMoney.do';
-          let startTime = this.$transferDate(this.searchData1.searchDate1[0]);
-          let endTime = this.$transferDate(this.searchData1.searchDate1[1]);
           let data = {
             startTime,
             endTime
@@ -245,6 +251,17 @@
             this.$showErrorMessage(this, e);
           })
         }
+      },
+      doDownload(obj) {
+        let url = obj.url,
+          startTime = obj.startTime,
+          endTime = obj.endTime;
+        let a1 = document.createElement('a');
+        a1.setAttribute('href', this.serverUrl + url + '?startTime=' + startTime + '&endTime=' + endTime);
+        let body = document.querySelector('body');
+        body.appendChild(a1);
+        a1.click();
+        a1.remove();
       }
     }
   }
