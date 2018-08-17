@@ -114,6 +114,9 @@
           }, {
             key: 4,
             value: '已取消'
+          }, {
+            key: 7,
+            value: '超时待支付'
           }],
           orderStatus: 9,
           searchDate: ''
@@ -140,7 +143,7 @@
           mobile: this.searchData.telphone,
           name: this.searchData.userName,
           appointStatus: this.searchData.orderStatus,
-          startIndex: (this.currentPage-1) * 10,
+          startIndex: (this.currentPage - 1) * 10,
           pageSize: 10,
           requestTimeStart: this.$transferDate(this.searchData.searchDate[0]),
           requestTimeEnd: this.$transferDateAddsuffix(this.searchData.searchDate[1])
@@ -197,6 +200,9 @@
         }
         if (n == 4) {
           return '已取消';
+        }
+        if (n == 7) {
+          return '超时待支付';
         }
       },
       backMoneyFilter(d) {
