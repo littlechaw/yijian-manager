@@ -25,6 +25,7 @@
           <el-form-item>
             <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
+          累计交易中金额：{{price}}
         </el-row>
       </el-form>
     </div>
@@ -73,6 +74,7 @@
         },
         tableData: [],
         total: 5,
+        price: '',
         currentPage: 1,
       }
     },
@@ -90,7 +92,7 @@
           name = this.searchData.storeName,
           userName = this.searchData.storeChat,
           requestName = this.searchData.storeApply,
-          startIndex = (this.currentPage-1) * 10,
+          startIndex = (this.currentPage - 1) * 10,
           pageSize = 10,
           createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
           createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]);
@@ -107,6 +109,7 @@
         this.$axios.dopost(url, data).then(res => {
           this.tableData = res.data;
           this.total = res.total;
+          this.price = res.price;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })

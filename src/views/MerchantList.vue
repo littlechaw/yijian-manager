@@ -27,6 +27,9 @@
             <el-date-picker class="date-picker-width" v-model="searchData.searchDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
             </el-date-picker>
           </el-form-item>
+          <el-form-item label="商家BD">
+            <el-input v-model="searchData.storeBD" placeholder="请输入商家BD"></el-input>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
@@ -117,7 +120,8 @@
             value: '已拒绝'
           }],
           isOpen: 9,
-          searchDate: ''
+          searchDate: '',
+          storeBD: ''
         },
         tableData: [],
         total: 5,
@@ -143,8 +147,9 @@
           storeStatus = this.searchData.isOpen,
           createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
           createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]),
-          startIndex = (this.currentPage-1) * 10,
-          pageSize = 10;
+          startIndex = (this.currentPage - 1) * 10,
+          pageSize = 10,
+          storeBD = this.searchData.storeBD;
         let data = {
           storeId,
           userName,
@@ -154,7 +159,8 @@
           createTimeStart,
           createTimeEnd,
           startIndex,
-          pageSize
+          pageSize,
+          storeBD
         };
         this.$axios.dopost(url, data).then(res => {
           this.tableData = res.data;
