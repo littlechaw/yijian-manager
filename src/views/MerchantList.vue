@@ -53,8 +53,12 @@
         <el-table-column prop="createTime" label="申请时间"></el-table-column>
         <el-table-column prop="" label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看商家信息</el-button>
-            <el-button @click="changeStoreUser(scope.row)" type="text" size="small" v-if="scope.row.storeStatus == 1">修改登录账户</el-button>
+            <el-row>
+              <el-button @click="handleClick(scope.row)" type="text" size="small">查看商家信息</el-button>
+            </el-row>
+            <el-row>
+              <el-button @click="changeStoreUser(scope.row)" type="text" size="small" v-if="scope.row.storeStatus == 1">修改登录账户</el-button>
+            </el-row>
           </template>
         </el-table-column>
       </el-table>
