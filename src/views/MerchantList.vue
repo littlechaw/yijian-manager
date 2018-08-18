@@ -59,6 +59,9 @@
             <el-row>
               <el-button @click="changeStoreUser(scope.row)" type="text" size="small" v-if="scope.row.storeStatus == 1">修改登录账户</el-button>
             </el-row>
+            <el-row>
+              <el-button @click="resetPsd(scope.row)" type="text" size="small" v-if="scope.row.storeStatus == 1">重置平台密码</el-button>
+            </el-row>
           </template>
         </el-table-column>
       </el-table>
@@ -227,6 +230,19 @@
           storeStatus: flag ? 1 : 2
         };
         this.$axios.dopost(url, data).then(res => {
+          this.queryData();
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
+        })
+      },
+      resetPsd(d) {
+        let url = '/yijian/opRoot/reSetStorePassword.do';
+        let storeId = d.storeId;
+        let data = {
+          storeId
+        };
+        this.$axios.dopost(url, data).then(res => {
+          this.$message.success("修改成功！")
           this.queryData();
         }).catch(e => {
           this.$showErrorMessage(this, e);
