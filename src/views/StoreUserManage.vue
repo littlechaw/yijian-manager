@@ -46,7 +46,7 @@
         }
       }
     },
-    comments:{
+    components:{
       headTop
     },
     mounted() {
