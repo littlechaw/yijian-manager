@@ -54,6 +54,7 @@
         <el-table-column prop="" label="操作">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看商家信息</el-button>
+            <el-button @click="changeStoreUser(scope.row)" type="text" size="small">修改登录账户</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -188,6 +189,28 @@
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
+      },
+      changeStoreUser(d) {
+        this.$prompt('请输入新的账号', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({value}) => {
+          let url = '/yijian/opRoot/reSetStoreMobile.do';
+          let storeId = d.storeId;
+          let newMobile = value;
+          let data = {
+            storeId,
+            newMobile
+          };
+          this.$axios.dopost(url, data).then(res => {
+            this.$message.success("修改成功！");
+            this.queryData();
+          }).catch(e => {
+            this.$showErrorMessage(this, e);
+          })
+        }).catch(() => {
+        });
+
       },
       handleCurrentChange(val) {
         this.currentPage = val;
