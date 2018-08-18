@@ -23,6 +23,7 @@ import GradeDiscount from '@/views/GradeDiscount'
 import PriceRange from '@/views/PriceRange'
 import DataStatistics from '@/views/DataStatistics'
 import ChangePassword from '@/views/ChangePassword'
+import StoreUserManage from '@/views/StoreUserManage'
 
 Vue.use(Router)
 
@@ -116,6 +117,10 @@ export default new Router({
         path:'changepassword',
         component:ChangePassword,
         name:'changepassword'
+      },{
+        path:'storeusermanage',
+        component:StoreUserManage,
+        name:'storeusermanage'
       }]
     }
   ]
