@@ -57,6 +57,9 @@
               <el-button @click="handleClick(scope.row)" type="text" size="small">查看商家信息</el-button>
             </el-row>
             <el-row>
+              <el-button @click="updateBD(scope.row)" type="text" size="small" v-if="scope.row.storeStatus == 1">修改BD</el-button>
+            </el-row>
+            <el-row>
               <el-button @click="changeStoreUser(scope.row)" type="text" size="small" v-if="scope.row.storeStatus == 1">修改登录账户</el-button>
             </el-row>
             <el-row>
@@ -217,7 +220,6 @@
           })
         }).catch(() => {
         });
-
       },
       handleCurrentChange(val) {
         this.currentPage = val;
@@ -247,6 +249,27 @@
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
+      },
+      updateBD(d) {
+        this.$prompt('请输入商家BD', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({value}) => {
+          let url = '/yijian/opRoot/updateStoreBD.do';
+          let storeId = d.storeId;
+          let storeBD = value;
+          let data = {
+            storeId,
+            storeBD
+          };
+          this.$axios.dopost(url, data).then(res => {
+            this.$message.success("修改成功！");
+            this.queryData();
+          }).catch(e => {
+            this.$showErrorMessage(this, e);
+          })
+        }).catch(() => {
+        });
       }
     },
     watch: {
