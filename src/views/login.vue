@@ -26,8 +26,8 @@
     name: "login",
     data() {
       return {
-        username:'',
-        password:''
+        username: '',
+        password: ''
       }
     },
     mounted() {
@@ -35,20 +35,21 @@
     },
     computed: {},
     methods: {
-      submitForm(){
-        let url='/yijian/opRoot/rootLogin.do';
-        let name=this.username;
-        let password=this.password;
-        let data={
+      submitForm() {
+        let url = '/yijian/opRoot/rootLogin.do';
+        let name = this.username;
+        let password = this.password;
+        let data = {
           name,
           password
         };
-        this.$axios.dopost(url,data).then(res=>{
+        this.$axios.dopost(url, data).then(res => {
+          this.$store.dispatch('setStoreInfo', JSON.stringify({userName: this.username}));
           this.$router.push({
-            name:'registermanage'
+            name: 'registermanage'
           });
-        }).catch(e=>{
-          this.$showErrorMessage(this,e);
+        }).catch(e => {
+          this.$showErrorMessage(this, e);
         });
 
       }

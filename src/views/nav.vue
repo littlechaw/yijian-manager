@@ -33,6 +33,7 @@
           </el-submenu>
           <el-submenu index="7">
             <template slot="title"><i class="el-icon-setting"></i>配置</template>
+            <el-menu-item index="changepassword">修改密码</el-menu-item>
             <el-menu-item index="classificationofarticles">客服电话</el-menu-item>
             <el-menu-item index="appointmenttime">用户协议</el-menu-item>
             <el-menu-item index="couponregister">注册优惠券</el-menu-item>

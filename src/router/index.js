@@ -22,6 +22,7 @@ import AppointmentTime from '@/views/AppointmentTime'
 import GradeDiscount from '@/views/GradeDiscount'
 import PriceRange from '@/views/PriceRange'
 import DataStatistics from '@/views/DataStatistics'
+import ChangePassword from '@/views/ChangePassword'
 
 Vue.use(Router)
 
@@ -111,6 +112,10 @@ export default new Router({
         path: 'datastatistics',
         component: DataStatistics,
         name: 'datastatistics'
+      },{
+        path:'changepassword',
+        component:ChangePassword,
+        name:'changepassword'
       }]
     }
   ]
