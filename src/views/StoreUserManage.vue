@@ -32,6 +32,8 @@
 </template>
 
 <script>
+  import headTop from '@/components/HeadTop'
+
   export default {
     name: "StoreUserManage",
     data() {
@@ -43,6 +45,9 @@
           password: ''
         }
       }
+    },
+    comments:{
+      headTop
     },
     mounted() {
       this.getUsers();
