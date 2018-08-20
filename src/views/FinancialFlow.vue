@@ -74,7 +74,7 @@
     methods: {
       queryData() {
         let url = '/yijian/opRoot/findServiceFlow.do';
-        let outTradeNo = this.searchData.orderID ? this.searchData.orderID : 0,
+        let outTradeNo = this.searchData.orderID ? this.searchData.orderID : '',
           name = this.searchData.storeName,
           startIndex = (this.currentPage-1) * 10,
           pageSize = 10,
