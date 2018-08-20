@@ -78,15 +78,15 @@
           name = this.searchData.storeName,
           startIndex = (this.currentPage-1) * 10,
           pageSize = 10,
-          createTimeStart = this.$transferDate(this.searchData.searchDate[0]),
-          createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]);
+          requestTimeStart = this.$transferDate(this.searchData.searchDate[0]),
+          requestTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]);
         let data = {
           outTradeNo,
           name,
           startIndex,
           pageSize,
-          createTimeStart,
-          createTimeEnd
+          requestTimeStart,
+          requestTimeEnd
         };
         this.$axios.dopost(url, data).then(res => {
           this.tableData = res.data;
