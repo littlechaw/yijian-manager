@@ -39,7 +39,9 @@
         <el-table-column prop="activityId" label="序号"></el-table-column>
         <el-table-column prop="header" label="活动标题"></el-table-column>
         <el-table-column prop="name" label="发布人"></el-table-column>
-        <el-table-column prop="activityStatus" label="状态"></el-table-column>
+        <el-table-column prop="activityStatus" label="状态">
+          <template slot-scope="scope">{{scope.row.activityStatus | activityStatusFilter}}</template>
+        </el-table-column>
         <el-table-column prop="createTime" label="发布时间"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
