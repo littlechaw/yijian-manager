@@ -146,7 +146,7 @@
       headTop
     },
     mounted() {
-      this.searchData.searchDate = [getBeforeDays(7), new Date()];
+      this.searchData.searchDate = ["",""];
       this.queryData();
     },
     methods: {
