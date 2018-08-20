@@ -45,6 +45,7 @@
         style="width: 100%;text-align:center">
         <el-table-column prop="storeId" label="商家ID"></el-table-column>
         <el-table-column prop="name" label="店名"></el-table-column>
+        <el-table-column prop="storeBD" label="BD"></el-table-column>
         <el-table-column prop="userName" label="联系人"></el-table-column>
         <el-table-column prop="userPhone" label="联系人电话"></el-table-column>
         <el-table-column prop="storeStatus" label="状态">
@@ -253,7 +254,8 @@
       updateBD(d) {
         this.$prompt('请输入商家BD', '提示', {
           confirmButtonText: '确定',
-          cancelButtonText: '取消'
+          cancelButtonText: '取消',
+          inputValue:d.storeBD
         }).then(({value}) => {
           let url = '/yijian/opRoot/updateStoreBD.do';
           let storeId = d.storeId;
