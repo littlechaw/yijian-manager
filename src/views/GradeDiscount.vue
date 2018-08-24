@@ -60,6 +60,20 @@
       },
       handleClick() {
         let url='/yijian/opRoot/updateConsumeDiscount.do';
+        let consume=this.form.consume,
+          discount=this.form.discount;
+        if(!consume || !discount){
+          this.$message.error("输入值不能为空");
+          return false;
+        }
+        if(isNaN(+consume) || isNaN(+discount)){
+          this.$message.error('请输入数值');
+          return false;
+        }
+        if(+consume<0 || +discount<0){
+          this.$message.error("请输入大于0的数字");
+          return false;
+        }
         let data=this.form;
         this.$axios.dopost(url, data).then(res => {
           this.queryData();
