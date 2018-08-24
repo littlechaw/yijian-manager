@@ -154,6 +154,10 @@
           type = this.articleClass,
           typeText = this.articleClassText,
           content = this.content.replace(/<[^>]*>|/g, "");
+        if (!header) {
+          this.$message.error("请输入标题");
+          return;
+        }
         let data = {
           header,
           text,
