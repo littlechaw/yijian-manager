@@ -57,8 +57,13 @@
       },
       handleClick() {
         let url = '/yijian/opRoot/updateRechargeMoney.do';
+        let rechargeMoney = this.form.priceList;
+        if (!formValid(rechargeMoney)) {
+          this.$message.error("输入的价格有问题");
+          return;
+        }
         let data = {
-          rechargeMoney: this.form.priceList
+          rechargeMoney
         };
         this.$axios.dopost(url, data).then(res => {
           this.queryData();
@@ -67,6 +72,14 @@
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
+      },
+      formValid(d) {
+        for (var i in d) {
+          if (isNaN(+d[i]) || +d[i] < 0) {
+            return false;
+          }
+          return true;
+        }
       }
     }
   }
