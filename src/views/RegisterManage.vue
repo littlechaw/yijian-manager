@@ -99,7 +99,7 @@
       headTop
     },
     mounted() {
-      this.searchData.searchDate = ["",""];
+      this.searchData.searchDate = ["", ""];
       this.queryData();
     },
     methods: {
@@ -111,7 +111,7 @@
         let userStatus = this.searchData.isJinyong;
         let createTimeStart = this.$transferDate(this.searchData.searchDate[0]);
         let createTimeEnd = this.$transferDateAddsuffix(this.searchData.searchDate[1]);
-        let startIndex = (this.currentPage-1) * 10;
+        let startIndex = (this.currentPage - 1) * 10;
         let pageSize = 10;
         let data = {
           userId,
@@ -155,6 +155,7 @@
               type: 'success',
               message: '修改成功!'
             });
+            this.queryData();
           }).catch(e => {
             this.$showErrorMessage(this, e);
           })
