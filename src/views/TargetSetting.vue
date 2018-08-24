@@ -61,6 +61,10 @@
           let data = {
             typeName: value
           };
+          if (!value) {
+            this.$message.error("请输入目标");
+            return false;
+          }
           this.$axios.dopost(url, data).then(res => {
             this.$message({
               type: 'success',

@@ -146,7 +146,7 @@
       headTop
     },
     mounted() {
-      this.searchData.searchDate = ["",""];
+      this.searchData.searchDate = ["", ""];
       this.queryData();
     },
     methods: {
@@ -209,6 +209,10 @@
           let url = '/yijian/opRoot/reSetStoreMobile.do';
           let storeId = d.storeId;
           let newMobile = value;
+          if (!newMobile) {
+            this.$message.error("请输入新账号");
+            return false;
+          }
           let data = {
             storeId,
             newMobile
@@ -255,11 +259,15 @@
         this.$prompt('请输入商家BD', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          inputValue:d.storeBD
+          inputValue: d.storeBD
         }).then(({value}) => {
           let url = '/yijian/opRoot/updateStoreBD.do';
           let storeId = d.storeId;
           let storeBD = value;
+          if (!storeBD) {
+            this.$message.error("请输入商家BD");
+            return false;
+          }
           let data = {
             storeId,
             storeBD

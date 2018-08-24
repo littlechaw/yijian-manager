@@ -63,6 +63,11 @@
           this.$message.error('请输入小于1的数字')
           return;
         }
+        if (!isNaN(+this.form.percent) && +this.form.percent < 0) {
+          this.$message.error('请输入大于0的数字')
+          return;
+        }
+
         let data = {
           proportion: this.form.percent
         };

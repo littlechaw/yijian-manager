@@ -63,6 +63,9 @@
       },
       handleClick() {
         let url = '/yijian/opRoot/updatePlatformMinConsumptionAndPrice.do';
+        if (!this.formValid()) {
+          return;
+        }
         let data = {
           minConsumption: this.form.minConsumption,
           price: this.form.price
@@ -74,6 +77,27 @@
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
+      },
+      formValid() {
+        let minCons = this.form.minConsumption,
+          price = this.form.price;
+        if (isNaN(+minCons)) {
+          this.$message.error("请输入数字");
+          return false;
+        }
+        if (+minCons < 0) {
+          this.$message.error("最低消费不能为负数");
+          return false;
+        }
+        if (isNaN(+price)) {
+          this.$message.error("请输入数字");
+          return false;
+        }
+        if (+price < 0) {
+          this.$message.error("单价不能为负数");
+          return false;
+        }
+        return true;
       }
     }
   }

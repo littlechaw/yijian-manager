@@ -158,6 +158,9 @@
           this.$message.error("请输入标题");
           return;
         }
+        if(header && header.length>30){
+          this.$message.error("标题长度不能超过30个字");
+        }
         let data = {
           header,
           text,

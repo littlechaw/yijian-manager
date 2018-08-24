@@ -43,6 +43,10 @@
       handleClick() {
         let url = '/yijian/opRoot/updateConsumerPhone.do';
         let data = {phone: this.phone};
+        if (!this.phone) {
+          this.$message.error("请输入客服电话");
+          return false;
+        }
         this.$axios.dopost(url, data).then(res => {
           this.$message.success('修改成功');
           this.inEdit = false;

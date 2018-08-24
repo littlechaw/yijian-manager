@@ -46,7 +46,7 @@
         }
       }
     },
-    components:{
+    components: {
       headTop
     },
     mounted() {
@@ -77,6 +77,15 @@
           name,
           password
         };
+        if (!name || !password) {
+          if (!name) {
+            this.$message.error("请输入子账号用户名");
+          }
+          if (!password) {
+            this.$message.error("请输入子账号密码");
+          }
+          return;
+        }
         this.$axios.dopost(url, data).then(res => {
           this.$message.success("添加成功！");
           this.getUsers();
