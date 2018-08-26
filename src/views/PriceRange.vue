@@ -74,7 +74,7 @@
         let temp = this.form.priceList;
         let data = {};
         for (let i = 0; i < temp.length; i++) {
-          if (isNaN(+temp[i].start) || +temp[i].start < 0 || isNaN(+temp[i].end) || +temp[i].end < 0) {
+          if (!temp[i].start || !temp[i].end || isNaN(+temp[i].start) || +temp[i].start < 0 || isNaN(+temp[i].end) || +temp[i].end < 0) {
             this.$message.error("请输入正确的价格区间");
             return false;
           }
