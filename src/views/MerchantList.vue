@@ -152,7 +152,7 @@
     methods: {
       queryData() {
         let url = '/yijian/opRoot/searchStore.do';
-        let storeId = this.searchData.storeID ? this.searchData.storeID : 0,
+        let storeId = this.searchData.storeID ? +this.searchData.storeID : 0,
           userName = this.searchData.storeChat,
           name = this.searchData.storeName,
           userPhone = this.searchData.storePhone,

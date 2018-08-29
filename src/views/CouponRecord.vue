@@ -18,7 +18,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
+            <el-button type="primary" @click="queryData(true)">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -105,20 +105,21 @@
       headTop
     },
     mounted() {
-      this.searchData.searchDate = ["",""];
+      this.searchData.searchDate = ["", ""];
       this.queryData();
     },
     methods: {
       addCoupon() {
 
       },
-      queryData() {
+      queryData(flag) {
+        flag ? this.currentPage = 1 : this.currentPage;
         let url = '/yijian/opRoot/findCoupon.do';
         let mobile = this.searchData.telphone,
           name = this.searchData.name,
           endTime = this.$transferDate(this.searchData.searchDate[1]),
           startTime = this.$transferDateAddsuffix(this.searchData.searchDate[0]),
-          startIndex = (this.currentPage-1) * 10,
+          startIndex = (this.currentPage - 1) * 10,
           pageSize = 10;
         let data = {
           mobile,
@@ -151,6 +152,22 @@
           derateTime = this.alertData.derateTime ? +this.alertData.derateTime : 0,
           days = this.alertData.days ? +this.alertData.days : 0,
           mobiles = this.mobiles.split(',');
+        if (!name) {
+          this.$message.error("请输入名称");
+          return false;
+        }
+        if (!derateTime || derateTime < 0) {
+          this.$message.error("请输入正确的计费时间");
+          return false;
+        }
+        if (!days || days < 0) {
+          this.$message.error("请输入正确的天数");
+          return false;
+        }
+        if (!this.mobiles || this.mobiles.length < 0) {
+          this.$message.error("请输入指定用户");
+          return false;
+        }
         let data = {
           name,
           derateTime,

@@ -23,7 +23,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
+            <el-button type="primary" @click="queryData(true)">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
           累计交易中金额：{{price}}
         </el-row>
@@ -82,13 +82,14 @@
       headTop
     },
     mounted() {
-      this.searchData.searchDate = ["",""];
+      this.searchData.searchDate = ["", ""];
       this.queryData();
     },
     methods: {
-      queryData() {
+      queryData(flag) {
+        flag ? this.currentPage = 1 : this.currentPage;
         let url = '/yijian/opRoot/getStoreTradingFlow.do';
-        let storeId = this.searchData.storeID ? this.searchData.storeID : 0,
+        let storeId = this.searchData.storeID ? +this.searchData.storeID : 0,
           name = this.searchData.storeName,
           userName = this.searchData.storeChat,
           requestName = this.searchData.storeApply,

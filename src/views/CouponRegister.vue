@@ -77,6 +77,18 @@
           derateTime = this.alertData.derateTime ? +this.alertData.derateTime : 0,
           days = this.alertData.days ? +this.alertData.days : 0;
 
+        if (!name) {
+          this.$message.error("请输入名称");
+          return false;
+        }
+        if (!derateTime || derateTime < 0) {
+          this.$message.error("请输入正确的计费时间");
+          return false;
+        }
+        if (!days || days < 0) {
+          this.$message.error("请输入正确的天数");
+          return false;
+        }
         let data = {
           openFlag,
           name,

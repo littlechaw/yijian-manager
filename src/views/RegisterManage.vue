@@ -105,7 +105,7 @@
     methods: {
       queryData() {
         let url = '/yijian/opRoot/searchUser.do';
-        let userId = this.searchData.userid ? this.searchData.userid : 0;
+        let userId = this.searchData.userid ? +this.searchData.userid : 0;
         let mobile = this.searchData.telphone;
         let name = this.searchData.username;
         let userStatus = this.searchData.isJinyong;
