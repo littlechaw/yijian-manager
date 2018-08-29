@@ -15,7 +15,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
+            <el-button type="primary" @click="queryData(true)">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -38,6 +38,7 @@
           @current-change="handleCurrentChange"
           :page-size="10"
           layout="prev, pager, next, jumper"
+          :current-page="currentPage"
           :total="total">
         </el-pagination>
       </div>
@@ -72,7 +73,8 @@
       this.queryData();
     },
     methods: {
-      queryData() {
+      queryData(flag) {
+        flag ? this.currentPage = 1 : this.currentPage;
         let url = '/yijian/opRoot/findServiceFlow.do';
         let outTradeNo = this.searchData.orderID ? this.searchData.orderID : '',
           name = this.searchData.storeName,

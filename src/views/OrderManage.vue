@@ -4,8 +4,8 @@
     <div class="header-top">
       <el-form :inline="true" :model="searchData" class="demo-form-inline">
         <el-row>
-          <el-form-item label="商家ID">
-            <el-input v-model="searchData.storeID" placeholder="请输入商家ID"></el-input>
+          <el-form-item label="用户ID">
+            <el-input v-model="searchData.storeID" placeholder="请输入用户ID"></el-input>
           </el-form-item>
           <el-form-item label="手机号">
             <el-input v-model="searchData.telphone" placeholder="请输入手机号"></el-input>
@@ -25,7 +25,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
+            <el-button type="primary" @click="queryData(true)">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -54,6 +54,7 @@
       <div class="block">
         <el-pagination
           @current-change="handleCurrentChange"
+          :current-page="currentPage"
           :page-size="10"
           layout="prev, pager, next, jumper"
           :total="total">
@@ -136,10 +137,11 @@
       this.queryData();
     },
     methods: {
-      queryData() {
+      queryData(flag) {
+        flag ? this.currentPage = 1 : this.currentPage;
         let url = '/yijian/opRoot/getAppoint.do';
         let data = {
-          userId: this.searchData.storeID ? this.searchData.storeID : 0,
+          userId: this.searchData.storeID ? +this.searchData.storeID : 0,
           mobile: this.searchData.telphone,
           name: this.searchData.userName,
           appointStatus: this.searchData.orderStatus,

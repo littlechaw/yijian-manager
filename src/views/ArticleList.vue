@@ -22,7 +22,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
+            <el-button type="primary" @click="queryData(true)">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -49,6 +49,7 @@
         <el-pagination
           @current-change="handleCurrentChange"
           :page-size="10"
+          :current-page="currentPage"
           layout="prev, pager, next, jumper"
           :total="total">
         </el-pagination>
@@ -100,7 +101,8 @@
           this.$showErrorMessage(this, e);
         })
       },
-      queryData() {
+      queryData(flag) {
+        flag ? this.currentPage = 1 : this.currentPage;
         let url = '/yijian/opRoot/findInformation.do';
         let header = this.searchData.articleTitle,
           timeStart = this.$transferDate(this.searchData.searchDate[0]),

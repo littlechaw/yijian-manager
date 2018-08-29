@@ -24,7 +24,7 @@
           <!--</el-select>-->
           <!--</el-form-item>-->
           <el-form-item>
-            <el-button type="primary" @click="queryData">查&nbsp;&nbsp;询</el-button>
+            <el-button type="primary" @click="queryData(true)">查&nbsp;&nbsp;询</el-button>
           </el-form-item>
         </el-row>
       </el-form>
@@ -54,6 +54,7 @@
           @current-change="handleCurrentChange"
           :page-size="10"
           layout="prev, pager, next, jumper"
+          :current-page="currentPage"
           :total="total">
         </el-pagination>
       </div>
@@ -112,17 +113,18 @@
       headTop
     },
     mounted() {
-      this.searchData.searchDate = ["",""];
+      this.searchData.searchDate = ["", ""];
       this.queryData();
     },
     methods: {
-      queryData() {
+      queryData(flag) {
+        flag ? this.currentPage = 1 : this.currentPage;
         let url = '/yijian/opRoot/findActivity.do';
         let userName = this.searchData.auth,
           startTime = this.$transferDate(this.searchData.searchDate[0]),
           endTime = this.$transferDateAddsuffix(this.searchData.searchDate[1]),
           status = this.searchData.isDone,
-          startIndex = (this.currentPage-1) * 10,
+          startIndex = (this.currentPage - 1) * 10,
           pageSize = 10;
         let data = {
           userName,
