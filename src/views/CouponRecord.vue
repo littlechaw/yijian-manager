@@ -52,7 +52,10 @@
         <el-input v-model="alertData.name" size="small"></el-input>
       </p>
       <p>内容：减免实际计费时间
-        <el-input v-model="alertData.derateTime" size="small"></el-input>
+        <!--<el-input v-model="alertData.derateTime" size="small"></el-input>-->
+        <el-select v-model="alertData.derateTime">
+          <el-option v-for="item in alertData.derateTimes" :label="item.value" :value="item.key" :key="item.key"></el-option>
+        </el-select>
         分钟
       </p>
       <p>使用期限：自领取时起
@@ -94,6 +97,7 @@
         alertData: {
           name: '',
           derateTime: '',
+          derateTimes: [],
           days: ''
         },
         mobiles: '',
@@ -108,10 +112,21 @@
     mounted() {
       this.searchData.searchDate = ["", ""];
       this.queryData();
+      this.getDerateTimes();
     },
     methods: {
       addCoupon() {
 
+      },
+      getDerateTimes() {
+        var temp = [];
+        for (let i = 0; i < 10; i++) {
+          temp.push({
+            key: 30 * i,
+            value: 30 * i
+          });
+        }
+        this.derateTimes = temp;
       },
       queryData(flag) {
         flag ? this.currentPage = 1 : this.currentPage;
