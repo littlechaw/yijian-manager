@@ -194,10 +194,19 @@
           this.dialogFormVisible = false;
           this.$message.success('修改成功!');
           this.queryData();
+          this.reset();
         }).catch(e => {
           this.dialogFormVisible = false;
           this.$showErrorMessage(this, e);
         })
+      },
+      reset() {
+        this.alertData = {
+          name: '',
+          derateTime: '',
+          derateTimes: [],
+          days: ''
+        }
       }
     },
     watch: {
