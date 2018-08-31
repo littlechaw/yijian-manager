@@ -206,7 +206,8 @@
           derateTime: '',
           derateTimes: [],
           days: ''
-        }
+        };
+        this.mobiles = '';
       }
     },
     watch: {
