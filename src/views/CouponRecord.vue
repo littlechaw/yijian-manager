@@ -126,7 +126,7 @@
             value: 30 * i
           });
         }
-        this.derateTimes = temp;
+        this.alertData.derateTimes = temp;
       },
       queryData(flag) {
         flag ? this.currentPage = 1 : this.currentPage;
