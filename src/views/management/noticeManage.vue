@@ -1,25 +1,20 @@
 <template>
   <div>
     <headTop></headTop>
-    <div class="edit_container" v-if="inEdit">
-      <h3>用户协议</h3>
-      <el-row>
-        <quill-editor v-model="content"
-                      ref="myQuillEditor"
-                      class="editer"
-                      :options="editorOption"
-                      @change="onEditorChange($event)"
-                      @ready="onEditorReady($event)">
-        </quill-editor>
+    <div class="edit_container">
+      <el-row type="flex" :gutter="20">
+        <el-col class="inner-title" style="width: 100px;">公告内容:</el-col>
       </el-row>
-    </div>
-    <div class="edit_container" v-if="!inEdit">
-      <h3>用户协议</h3>
-      <div v-html="content"></div>
+      <quill-editor v-model="content"
+                    ref="myQuillEditor"
+                    class="editer"
+                    :options="editorOption"
+                    @change="onEditorChange($event)"
+                    @ready="onEditorReady($event)">
+      </quill-editor>
     </div>
     <div class="submit_btn">
-      <el-button type="primary" @click="submit" v-if="inEdit">保存</el-button>
-      <el-button type="primary" @click="inEdit = true" v-if="!inEdit">编辑</el-button>
+      <el-button type="primary" @click="submit">提交</el-button>
     </div>
     <!-- 图片上传组件辅助-->
     <el-upload
@@ -63,10 +58,9 @@
   ]
 
   export default {
-    name: "AppointmentTime",
+    name: 'noticeManage',
     data() {
       return {
-        inEdit: false,
         quillUpdateImg: false,
         header: '',
         token: {token: sessionStorage.token},
@@ -82,7 +76,7 @@
               handlers: {
                 'image': function (value) {
                   if (value) {
-                    document.querySelector('.avatar-uploader input').click();
+                    document.querySelector('.avatar-uploader input').click()
                   } else {
                     this.quill.format('image', false);
                   }
@@ -90,11 +84,12 @@
               }
             }
           }
-        }
+        },
+        articleClass: 0,
+        articleClassList: []
       }
     },
     mounted() {
-      this.queryData();
     },
     components: {
       quillEditor,
@@ -106,15 +101,6 @@
       }
     },
     methods: {
-      queryData() {
-        let url = '/yijian/opRoot/getRegisteAgreement.do';
-        let data = {};
-        this.$axios.dopost(url, data).then(res => {
-          this.content = res;
-        }).catch(e => {
-          this.$showErrorMessage(this, e);
-        })
-      },
       beforeUpload() {
         this.quillUpdateImg = true;
       },
@@ -139,27 +125,36 @@
       onEditorChange(d) {
       },
       submit() {
-        let url = '/yijian/opRoot/updateRegisteAgreement.do';
+        let url = '/api/';
+        let content = this.content.replace(/<[^>]*>|/g, "");
         let data = {
-          agreement: this.content
+          content
         };
         this.$axios.dopost(url, data).then(res => {
           this.$message.success('提交成功!');
-          this.inEdit = false;
         }).catch(e => {
           this.$showErrorMessage(this, e);
         })
       }
-    }
+    },
+    watch: {}
   }
 </script>
 
-<style lang="less" scoped>
-  @import '../style/mixin';
+<style lang="less">
+  @import '../../style/mixin';
 
   .edit_container {
     padding: 40px;
     margin-bottom: 40px;
+
+    .inner-title {
+      padding: 4px 0px;
+    }
+
+    .el-row {
+      margin: 20px 0px;
+    }
   }
 
   .editer {
@@ -171,3 +166,4 @@
   }
 
 </style>
+

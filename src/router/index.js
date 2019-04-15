@@ -1,31 +1,28 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
-import Login from '@/views/login'
-import Nav from '@/views/nav'
-import RegisterManage from '@/views/RegisterManage'
-import MerchantList from '@/views/MerchantList'
-import MerchantWater from '@/views/MerchantWater'
-import PriceManage from '@/views/PriceManage'
-import OrderManage from '@/views/OrderManage'
-import FinancialFlow from '@/views/FinancialFlow'
-import EditArticle from '@/views/EditArticle'
-import ArticleList from '@/views/ArticleList'
-import ActivityManage from '@/views/ActivityManage'
-import TargetSetting from '@/views/TargetSetting'
-import ClassificationOfArticles from '@/views/ClassificationOfArticles'
-import CouponRegister from '@/views/CouponRegister'
-import CouponRecord from '@/views/CouponRecord'
-import Proportionate from '@/views/Proportionate'
-import RechargeAmount from '@/views/RechargeAmount'
-import AppointmentTime from '@/views/AppointmentTime'
-import GradeDiscount from '@/views/GradeDiscount'
-import PriceRange from '@/views/PriceRange'
-import DataStatistics from '@/views/DataStatistics'
-import ChangePassword from '@/views/ChangePassword'
-import StoreUserManage from '@/views/StoreUserManage'
-
-Vue.use(Router)
+const Vue = require('vue')
+const Router = require('vue-router')
+const Login = resolve => require(['@/views/login'], resolve)
+const regForm = resolve => require(['@/views/regForm'], resolve)
+const forgetPsw = resolve => require(['@/views/forgetPsw'], resolve)
+const Nav = resolve => require(['@/views/nav'], resolve)
+const accountInfo = resolve => require(['@/views/account/accountInfo'], resolve)
+const accountRecharge = resolve => require(['@/views/account/accountRecharge'], resolve)
+const rechargeAudit = resolve => require(['@/views/account/rechargeAudit'], resolve)
+const changePsw = resolve => require(['@/views/account/changePsw'], resolve)
+const addUser = resolve => require(['@/views/users/addUser'], resolve)
+const userInfo = resolve => require(['@/views/users/userInfo'], resolve)
+const bulkShipment = resolve => require(['@/views/order/bulkShipment'], resolve)
+const numberQuery = resolve => require(['@/views/order/numberQuery'], resolve)
+const shippingQuery = resolve => require(['@/views/order/shippingQuery'], resolve)
+const sheetManage = resolve => require(['@/views/order/sheetManage'], resolve)
+const orderCourse = resolve => require(['@/views/course/orderCourse'], resolve)
+const sysConfig = resolve => require(['@/views/management/sysConfig'], resolve)
+const noticeManage = resolve => require(['@/views/management/noticeManage'], resolve)
+const sendStatistics = resolve => require(['@/views/statistics/sendStatistics'], resolve)
+const rechargeStatistics = resolve => require(['@/views/statistics/rechargeStatistics'], resolve)
+const deductionStatistics = resolve => require(['@/views/statistics/deductionStatistics'], resolve)
+const profitStatistics = resolve => require(['@/views/statistics/profitStatistics'], resolve)
+const blackList = resolve => require(['@/views/black/blackList'], resolve)
+const addressmaintain = resolve => require(['@/views/order/addressMaintain'], resolve)
 
 export default new Router({
   routes: [
@@ -34,93 +31,93 @@ export default new Router({
       name: 'login',
       component: Login
     }, {
+      path: '/reg',
+      name: 'regForm',
+      component: regForm
+    }, {
+      path: '/forgetPsw',
+      name: 'forgetPsw',
+      component: forgetPsw
+    }, {
       path: '/nav',
       component: Nav,
       name: 'nav',
       children: [{
-        path: 'registermanage',
-        component: RegisterManage,
-        name: 'registermanage'
+        path: 'accountInfo',
+        component: accountInfo,
+        name: 'accountInfo'
       }, {
-        path: 'merchantlist',
-        component: MerchantList,
-        name: 'merchantlist'
+        path: 'accountRecharge',
+        component: accountRecharge,
+        name: 'accountRecharge'
       }, {
-        path: 'merchantwater',
-        component: MerchantWater,
-        name: 'merchantwater'
+        path: 'rechargeAudit',
+        component: rechargeAudit,
+        name: 'rechargeAudit'
       }, {
-        path: 'pricemanage',
-        component: PriceManage,
-        name: 'pricemanage'
+        path: 'changePsw',
+        component: changePsw,
+        name: 'changePsw'
       }, {
-        path: 'ordermanage',
-        component: OrderManage,
-        name: 'ordermanage'
+        path: 'addUser',
+        component: addUser,
+        name: 'addUser'
       }, {
-        path: 'financialflow',
-        component: FinancialFlow,
-        name: 'financialflow'
+        path: 'userInfo',
+        component: userInfo,
+        name: 'userInfo'
       }, {
-        path: 'editarticle',
-        component: EditArticle,
-        name: 'editarticle'
+        path: 'bulkShipment',
+        component: bulkShipment,
+        name: 'bulkShipment'
       }, {
-        path: 'articlelist',
-        component: ArticleList,
-        name: 'articlelist'
+        path: 'numberQuery',
+        component: numberQuery,
+        name: 'numberQuery'
       }, {
-        path: 'activitymanage',
-        component: ActivityManage,
-        name: 'activitymanage'
+        path: 'shippingQuery',
+        component: shippingQuery,
+        name: 'shippingQuery'
       }, {
-        path: 'targetsetting',
-        component: TargetSetting,
-        name: 'targetsetting'
+        path: 'sheetManage',
+        component: sheetManage,
+        name: 'sheetManage'
       }, {
-        path: 'classificationofarticles',
-        component: ClassificationOfArticles,
-        name: 'classificationofarticles'
+        path: 'orderCourse',
+        component: orderCourse,
+        name: 'orderCourse'
       }, {
-        path: 'couponregister',
-        component: CouponRegister,
-        name: 'couponregister'
+        path: 'sysConfig',
+        component: sysConfig,
+        name: 'sysConfig'
       }, {
-        path: 'couponrecord',
-        component: CouponRecord,
-        name: 'couponrecord'
+        path: 'noticeManage',
+        component: noticeManage,
+        name: 'noticeManage'
       }, {
-        path: 'proportionate',
-        component: Proportionate,
-        name: 'proportionate'
+        path: 'sendStatistics',
+        component: sendStatistics,
+        name: 'sendStatistics'
       }, {
-        path: 'rechargeamount',
-        component: RechargeAmount,
-        name: 'rechargeamount'
+        path: 'rechargeStatistics',
+        component: rechargeStatistics,
+        name: 'rechargeStatistics'
       }, {
-        path: 'appointmenttime',
-        component: AppointmentTime,
-        name: 'appointmenttime'
+        path: 'deductionStatistics',
+        component: deductionStatistics,
+        name: 'deductionStatistics'
       }, {
-        path: 'gradediscount',
-        component: GradeDiscount,
-        name: 'gradediscount'
+        path: 'profitStatistics',
+        component: profitStatistics,
+        name: 'profitStatistics'
       }, {
-        path: 'pricerange',
-        component: PriceRange,
-        name: 'pricerange'
+        path: 'blackList',
+        component: blackList,
+        name: 'blackList'
       }, {
-        path: 'datastatistics',
-        component: DataStatistics,
-        name: 'datastatistics'
-      },{
-        path:'changepassword',
-        component:ChangePassword,
-        name:'changepassword'
-      },{
-        path:'storeusermanage',
-        component:StoreUserManage,
-        name:'storeusermanage'
+        path: 'addressmaintain',
+        component: addressmaintain,
+        name: 'addressmaintain'
       }]
     }
   ]

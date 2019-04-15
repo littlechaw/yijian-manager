@@ -1,14 +1,29 @@
 <template>
   <div class="header_container">
-    <span></span>
-    <span @click="handleClick">退出登录</span>
+    <el-row>
+      <el-col>
+        <img src="../../static/qq.png" alt="" v-if="this.storeInfo.userType == 2">
+        <a target="_blank" :href="qqChatUrl" v-if="this.storeInfo.userType == 2">QQ客服</a>
+        <span @click="handleClick">退出登录</span>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
+  import * as URL from '@/URL'
+
   export default {
     name: "HeadTop",
-    methods:{
+    data() {
+      return {
+        storeInfo: JSON.parse(this.$store.getters.getStoreInfo),
+        qqChatUrl: JSON.parse(this.$store.getters.getStoreInfo).qqChatUrl
+      }
+    },
+    mounted() {
+    },
+    methods: {
       handleClick() {
         this.$message({
           type: 'success',
@@ -24,13 +39,33 @@
   @import '../style/mixin';
 
   .header_container {
-    background-color: #EFF2F7;
-    height: 60px;
     display: flex;
-    justify-content: space-between;
+    height: 40px;
+    line-height: 40px;
+    justify-content: flex-end;
     align-items: center;
-    padding: 0 20px;
+    background-color: white;
+
+    .el-row .el-col {
+      display: flex;
+      align-items: center;
+    }
+
+    a {
+      margin-right: 20px;
+    }
+
+    a:hover, a:visited, a:link, a:active {
+      color: black;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+
     span {
+      margin-right: 20px;
       cursor: pointer;
     }
   }

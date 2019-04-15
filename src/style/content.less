@@ -1,11 +1,51 @@
 @twentyPX: 20px;
 @tenPX: 10px;
 @cccccc: #cccccc;
-.content {
+@EEF5F9: #EEF5F9;
+.bgColor {
+  background: white;
+}
+
+.title {
   margin: @twentyPX;
+  padding: @twentyPX;
+  background: white;
+
+  .el-row {
+    margin-top: @twentyPX;
+  }
+}
+
+.content {
+  min-height: 400px;
+  margin: @twentyPX;
+  padding: @twentyPX;
+  background: white;
+
+  .el-form {
+    width: 100%;
+
+    .el-select {
+      width: 100%;
+    }
+  }
+
   .block {
     margin: @tenPX;
     text-align: center;
+  }
+
+  p {
+    margin-bottom: @twentyPX;
+  }
+}
+
+.footer {
+  margin: @twentyPX;
+  padding-bottom: @twentyPX;
+
+  p {
+    margin-bottom: @twentyPX;
   }
 }
 
